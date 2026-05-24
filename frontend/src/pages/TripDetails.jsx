@@ -17,7 +17,7 @@ import {
   FiMap,
   FiCamera,
 } from "react-icons/fi";
-import { tripAPI, weatherAPI } from "../services/api";
+import { tripAPI, weatherAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/TripDetails.css";
 
@@ -165,7 +165,6 @@ const TripDetails = () => {
   const itinerary = trip.itinerary;
   const dailyItinerary = itinerary?.dailyItinerary || [];
 
-  // Function to normalize budget - MOVED HERE after itinerary is defined
   const getNormalizedBudget = () => {
     const estimatedBudget = itinerary?.estimatedBudget;
     const actualBudget = trip.estimatedCost || trip.budget;
@@ -188,7 +187,6 @@ const TripDetails = () => {
     let activities = Math.round(estimatedBudget.activities * ratio);
     let transport = Math.round(estimatedBudget.transport * ratio);
 
-    // Adjust to make total exact
     const sum = accommodation + food + activities + transport;
     const diff = actualBudget - sum;
     accommodation += diff;

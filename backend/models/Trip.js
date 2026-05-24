@@ -17,8 +17,8 @@ const tripSchema = new mongoose.Schema({
   },
   currency: {
     type: String,
-    default: 'INR',
-    enum: ['INR', 'USD', 'EUR', 'GBP']
+    default: "INR",
+    enum: ["INR", "USD", "EUR", "GBP"],
   },
   days: {
     type: Number,

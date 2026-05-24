@@ -8,7 +8,7 @@ import {
   FiEye,
   FiTrash2,
 } from "react-icons/fi";
-import { tripAPI } from "../services/api";
+import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/components/TripCard.css";
 
@@ -75,7 +75,6 @@ const TripCard = ({ trip, onDelete, compact = false }) => {
       onClick={() => navigate(`/trip/${trip._id}`)}
       className="trip-card"
     >
-      {/* Rest of the full card implementation */}
       <div className="trip-card-header">
         <div className="trip-card-info">
           <div className="trip-avatar">

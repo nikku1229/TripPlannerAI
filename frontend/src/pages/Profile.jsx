@@ -15,11 +15,11 @@ import {
   FiTrendingUp,
   FiAward,
   FiStar,
-  FiCompass, // Add this
-  FiBell, // Add this
-  FiCreditCard, // Add this
+  FiCompass,
+  FiBell,
+  FiCreditCard,
 } from "react-icons/fi";
-import { tripAPI } from "../services/api";
+import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/Profile.css";
 
@@ -155,7 +155,6 @@ const Profile = () => {
       if (response.ok) {
         const updatedUser = await response.json();
         updateUser(updatedUser);
-        // Also update localStorage if you store user there
         localStorage.setItem("user", JSON.stringify(updatedUser));
         toast.success("Profile updated successfully");
         setIsEditing(false);

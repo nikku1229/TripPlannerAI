@@ -10,7 +10,6 @@
 .header-logo .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
-  /* color: var(--white); */
   font-family: "Modern Antiqua", serif;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
@@ -38,7 +37,6 @@
   transform: scale(1.05);
 }
 
-/* Update existing logo-text styles */
 .header-logo .logo-text {
   font-size: 1.5rem;
   font-weight: 700;

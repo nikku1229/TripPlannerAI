@@ -20,7 +20,7 @@ import "../styles/components/Sidebar.css";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
-  const [isDark, setIsDark] = useState(false); // Always false for now
+  const [isDark, setIsDark] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -36,9 +36,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Dark mode toggle - disabled for now, but kept for future
   const toggleDarkMode = () => {
-    // Will implement dark mode later
     console.log("Dark mode will be implemented later");
   };
 

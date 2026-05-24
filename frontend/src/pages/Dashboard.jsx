@@ -23,7 +23,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
-import { tripAPI } from "../services/api";
+import { tripAPI } from "../services/servicesApi";
 import { useAuth } from "../context/AuthContext";
 import toast from "react-hot-toast";
 import "../styles/pages/Dashboard.css";
@@ -85,7 +85,6 @@ const Dashboard = () => {
     lastDestination: trips.length > 0 ? trips[0]?.destination : "No trips yet",
   };
 
-  // Prepare Bar Chart Data - Budget for each trip
   const budgetData = trips.slice(0, 8).map((trip, index) => ({
     name:
       trip.destination?.length > 12
@@ -95,7 +94,6 @@ const Dashboard = () => {
     fullName: trip.destination,
   }));
 
-  // Prepare Pie Chart Data - Days for each trip
   const daysData = trips.slice(0, 8).map((trip, index) => ({
     name:
       trip.destination?.length > 12
@@ -316,7 +314,6 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Insights Section with Charts */}
       {trips.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -329,7 +326,6 @@ const Dashboard = () => {
           </div>
 
           <div className="charts-row">
-            {/* Bar Chart: Budget per Trip */}
             <div className="chart-card">
               <h3>Budget per Trip</h3>
               <div className="chart-wrapper">

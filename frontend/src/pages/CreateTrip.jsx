@@ -9,7 +9,7 @@ import {
   FiHeart,
   FiLoader,
 } from "react-icons/fi";
-import { tripAPI } from "../services/api";
+import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/CreateTrip.css";
 
@@ -140,7 +140,6 @@ const CreateTrip = () => {
             </div>
           </div>
 
-          {/* After the budget input, add this budget range indicator */}
           <div className="budget-range">
             <div className="budget-range-label">
               <span>Budget Range</span>

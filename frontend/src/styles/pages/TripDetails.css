@@ -70,11 +70,9 @@
 .trip-title {
   font-size: 2rem;
   font-weight: 500;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(135deg,
+      var(--primary-color),
+      var(--secondary-color));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -231,11 +229,9 @@
 }
 
 .day-header {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(135deg,
+      var(--primary-color),
+      var(--secondary-color));
   color: var(--white);
   padding: 14px 20px;
 }

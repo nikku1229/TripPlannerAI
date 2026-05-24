@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
         login,
         register,
         logout,
-        updateUser, // Provide updateUser instead of setUser
+        updateUser,
       }}
     >
       {children}

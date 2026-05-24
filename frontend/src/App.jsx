@@ -6,11 +6,8 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Layout from "./components/Layout";
-
-// Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -36,26 +33,24 @@ function App() {
         v7_relativeSplatPath: true,
       }}
     >
-      <AuthProvider>
-        <Toaster position="top-right" />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+      <Toaster position="top-right" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-          <Route element={<PrivateRoute />}>
-            <Route element={<Layout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/create-trip" element={<CreateTrip />} />
-              <Route path="/trip/:id" element={<TripDetails />} />
-              <Route path="/chat" element={<ChatAssistant />} />
-              <Route path="/profile" element={<Profile />} />
-            </Route>
+        <Route element={<PrivateRoute />}>
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/create-trip" element={<CreateTrip />} />
+            <Route path="/trip/:id" element={<TripDetails />} />
+            <Route path="/chat" element={<ChatAssistant />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
+        </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </AuthProvider>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </Router>
   );
 }

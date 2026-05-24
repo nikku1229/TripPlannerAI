@@ -12,7 +12,7 @@ import {
   FiThumbsDown,
 } from "react-icons/fi";
 import { FaRobot } from "react-icons/fa";
-import { aiAPI } from "../services/api";
+import { aiAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/ChatAssistant.css";
 
@@ -40,13 +40,10 @@ const ChatAssistant = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Format message content with markdown-like styling
   const formatMessageContent = (content) => {
-    // Split content into paragraphs
     const paragraphs = content.split(/\n\n/);
 
     return paragraphs.map((paragraph, idx) => {
-      // Check for bullet points
       if (paragraph.includes("•") || paragraph.includes("- ")) {
         const lines = paragraph.split(/\n/);
         const bulletItems = lines.filter(
