@@ -1,8 +1,9 @@
 // routes/trip.routes.js
 const express = require("express");
-const router = express.Router();
 const tripController = require("../controllers/trip.controller");
 const authMiddleware = require("../middleware/auth");
+
+const router = express.Router();
 
 router.use(authMiddleware);
 

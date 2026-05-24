@@ -3,10 +3,9 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Currency conversion rates (simplified - in production use API)
 const exchangeRates = {
   INR: 1,
-  USD: 83.5,
+  USD: 97.5,
   EUR: 90.2,
   GBP: 105.3,
 };
@@ -22,7 +21,6 @@ exports.generateItinerary = async (req, res) => {
       currency = "INR",
     } = req.body;
 
-    // Convert budget to USD for AI prompt (Gemini works better with USD)
     const budgetInUSD =
       currency === "INR" ? Math.round(budget / exchangeRates.USD) : budget;
 
@@ -65,19 +63,17 @@ exports.generateItinerary = async (req, res) => {
     const response = await result.response;
     const text = response.text();
 
-    // Parse the JSON response
     let itinerary;
+
     try {
       const cleanText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
       itinerary = JSON.parse(cleanText);
 
-      // Ensure budget values are in INR
       if (itinerary.estimatedBudget) {
         itinerary.estimatedBudget.total = budget;
       }
     } catch (parseError) {
       console.error("JSON Parse Error:", parseError);
-      // Fallback with INR values
       const dailyBudget = Math.round(budget / days);
       itinerary = {
         dailyItinerary: Array.from({ length: days }, (_, i) => ({
@@ -110,7 +106,6 @@ exports.generateItinerary = async (req, res) => {
       };
     }
 
-    // Create and save trip
     const trip = new Trip({
       userId: req.userId,
       destination,

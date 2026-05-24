@@ -85,12 +85,10 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// IMPORTANT: This is the function that handles profile updates
 exports.updateProfile = async (req, res) => {
   try {
     const { name, email, bio, phone, location } = req.body;
 
-    // Build update object with only provided fields
     const updateFields = {};
     if (name !== undefined) updateFields.name = name;
     if (email !== undefined) updateFields.email = email;
@@ -98,7 +96,6 @@ exports.updateProfile = async (req, res) => {
     if (phone !== undefined) updateFields.phone = phone;
     if (location !== undefined) updateFields.location = location;
 
-    // Update user and return the updated document
     const user = await User.findByIdAndUpdate(req.userId, updateFields, {
       new: true,
       runValidators: true,

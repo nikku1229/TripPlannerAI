@@ -6,7 +6,6 @@ exports.chatWithAI = async (req, res) => {
   try {
     const { message, context } = req.body;
 
-    // Use updated model name
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `You are a travel assistant AI. Help the user with their travel query.
@@ -37,8 +36,7 @@ exports.getPackingSuggestions = async (req, res) => {
   try {
     const { destination, days, weather } = req.body;
 
-    // Use updated model name
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `Create a packing list for a ${days}-day trip to ${destination}.
     Weather conditions: ${weather || "Unknown"}
@@ -56,14 +54,12 @@ exports.getPackingSuggestions = async (req, res) => {
     const response = await result.response;
     const text = response.text();
 
-    // Clean and parse JSON
     const cleanText = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
     const suggestions = JSON.parse(cleanText);
 
     res.json(suggestions);
   } catch (error) {
     console.error("Packing suggestions error:", error);
-    // Fallback response
     res.json({
       essentials: ["Passport", "Tickets", "Wallet", "Phone"],
       clothing: ["Weather-appropriate clothes", "Comfortable shoes"],

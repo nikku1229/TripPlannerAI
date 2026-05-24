@@ -1,8 +1,8 @@
-// routes/ai.routes.js
 const express = require("express");
-const router = express.Router();
 const aiController = require("../controllers/ai.controller");
 const authMiddleware = require("../middleware/auth");
+
+const router = express.Router();
 
 router.use(authMiddleware);
 

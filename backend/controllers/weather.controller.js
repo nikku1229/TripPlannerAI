@@ -1,4 +1,3 @@
-// controllers/weather.controller.js
 const axios = require("axios");
 
 exports.getWeather = async (req, res) => {
