@@ -1,0 +1,92 @@
+.header-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-logo .logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  /* color: var(--white); */
+  font-family: "Modern Antiqua", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.header-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.header-logo a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-image {
+  width: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.header-logo a:hover .logo-image {
+  transform: scale(1.05);
+}
+
+/* Update existing logo-text styles */
+.header-logo .logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: "Modern Antiqua", serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+  padding: 8px 24px;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 400;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 12px 16px;
+  }
+
+  .header-logo .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .logo-image {
+    width: 32px;
+    height: 32px;
+  }
+
+  .header-logo .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .header-logo a {
+    gap: 8px;
+  }
+
+  .header-nav {
+    gap: 16px;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+
+  .primary-btn.small {
+    padding: 6px 16px;
+    font-size: 0.85rem;
+  }
+}

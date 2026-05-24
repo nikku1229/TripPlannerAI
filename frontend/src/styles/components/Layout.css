@@ -1,0 +1,27 @@
+.layout-container {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+.layout-main {
+  flex: 1;
+  overflow-x: hidden;
+  margin-left: 0;
+}
+
+.layout-main main {
+  padding: 20px;
+  min-height: calc(100vh - 80px);
+}
+
+@media (max-width: 768px) {
+  .layout-main {
+    margin-left: 0 !important;
+  }
+
+  .layout-main main {
+    padding: 15px;
+  }
+}
