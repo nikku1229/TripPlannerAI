@@ -196,9 +196,7 @@ const ChatAssistant = () => {
   return (
     <div className="chat-container">
       <div className="chat-grid">
-        {/* Chat Area */}
         <div className="chat-main">
-          {/* Header */}
           <div className="chat-header">
             <div className="chat-header-info">
               <div className="chat-avatar">

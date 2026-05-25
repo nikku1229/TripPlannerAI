@@ -1,4 +1,3 @@
-// models/Trip.js
 const mongoose = require("mongoose");
 
 const tripSchema = new mongoose.Schema({

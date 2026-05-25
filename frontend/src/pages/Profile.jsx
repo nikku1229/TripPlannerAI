@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useAuth } from "../context/AuthContext";
 import {
   FiUser,
   FiMail,
@@ -19,7 +18,8 @@ import {
   FiBell,
   FiCreditCard,
 } from "react-icons/fi";
-import { tripAPI } from "../services/servicesApi";
+import { useAuth } from "../context/AuthContext";
+import { tripAPI, profileAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/Profile.css";
 
@@ -82,6 +82,9 @@ const Profile = () => {
       calculateStats(response.data);
     } catch (error) {
       console.error("Error fetching trips:", error);
+      if (error.response?.status === 401) {
+        toast.error("Session expired. Please login again.");
+      }
     }
   };
 
@@ -118,82 +121,61 @@ const Profile = () => {
     });
   };
 
-  const loadUserPreferences = async () => {
-    try {
-      const response = await fetch(`/api/auth/preferences`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setPreferences(data);
-      }
-    } catch (error) {
-      console.error("Error loading preferences:", error);
-    }
-  };
-
   const handleUpdate = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/auth/profile`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          bio: formData.bio,
-          phone: formData.phone,
-          location: formData.location,
-        }),
+      const response = await profileAPI.profileUpdate({
+        name: formData.name,
+        email: formData.email,
+        bio: formData.bio,
+        phone: formData.phone,
+        location: formData.location,
       });
 
-      if (response.ok) {
-        const updatedUser = await response.json();
-        updateUser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
-        toast.success("Profile updated successfully");
-        setIsEditing(false);
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || "Update failed");
-      }
+      const updatedUser = response.data;
+      updateUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      toast.success("Profile updated successfully");
+      setIsEditing(false);
     } catch (error) {
       console.error("Update error:", error);
-      toast.error(error.message || "Failed to update profile");
+      toast.error(error.response?.data?.message || "Failed to update profile");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadUserPreferences = async () => {
+    try {
+      const response = await profileAPI.getPreferences();
+      if (response.data) {
+        setPreferences((prev) => ({
+          ...prev,
+          ...response.data,
+        }));
+      }
+    } catch (error) {
+      console.error("Error loading preferences:", error);
+      if (error.response?.status === 401) {
+        toast.error("Please login to save preferences");
+      }
     }
   };
 
   const handleSavePreferences = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/auth/preferences`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        body: JSON.stringify(preferences),
-      });
+      const response = await profileAPI.updatePreferences(preferences);
 
-      if (response.ok) {
-        const updatedPrefs = await response.json();
-        setPreferences(updatedPrefs);
-        toast.success("Preferences saved successfully");
-        setIsEditingPreferences(false);
-      } else {
-        const error = await response.json();
-        throw new Error(error.message || "Save failed");
-      }
+      const updatedPrefs = response.data;
+      setPreferences(updatedPrefs);
+      toast.success("Preferences saved successfully");
+      setIsEditingPreferences(false);
     } catch (error) {
       console.error("Save preferences error:", error);
-      toast.error(error.message || "Failed to save preferences");
+      toast.error(
+        error.response?.data?.message || "Failed to save preferences",
+      );
     } finally {
       setLoading(false);
     }
@@ -257,9 +239,12 @@ const Profile = () => {
 
   const recentTrips = trips.slice(0, 4);
 
+  const navigateToTrip = (tripId) => {
+    window.location.href = `/trip/${tripId}`;
+  };
+
   return (
     <div className="profile-container">
-      {/* Profile Header Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -466,7 +451,7 @@ const Profile = () => {
               <div
                 key={trip._id}
                 className="recent-trip-card"
-                onClick={() => (window.location.href = `/trip/${trip._id}`)}
+                onClick={() => navigateToTrip(trip._id)}
               >
                 <div className="trip-card-header">
                   <div className="trip-destination-icon">
