@@ -97,7 +97,6 @@ const TripDetails = () => {
 
   const formatINR = (amount) => {
     return new Intl.NumberFormat("en-IN", {
-      style: "currency",
       currency: "INR",
       maximumFractionDigits: 0,
     }).format(amount);
@@ -416,30 +415,30 @@ const TripDetails = () => {
               <div className="budget-item">
                 <span>Accommodation</span>
                 <span className="budget-amount">
-                  {formatINR(normalizedBudget.accommodation)}
+                  ₹{formatINR(normalizedBudget.accommodation)}
                 </span>
               </div>
               <div className="budget-item">
                 <span>Food</span>
                 <span className="budget-amount">
-                  {formatINR(normalizedBudget.food)}
+                  ₹{formatINR(normalizedBudget.food)}
                 </span>
               </div>
               <div className="budget-item">
                 <span>Activities</span>
                 <span className="budget-amount">
-                  {formatINR(normalizedBudget.activities)}
+                  ₹{formatINR(normalizedBudget.activities)}
                 </span>
               </div>
               <div className="budget-item">
                 <span>Transport</span>
                 <span className="budget-amount">
-                  {formatINR(normalizedBudget.transport)}
+                  ₹{formatINR(normalizedBudget.transport)}
                 </span>
               </div>
               <div className="budget-total">
                 <span>Total</span>
-                <span>{formatINR(normalizedBudget.total)}</span>
+                <span>₹{formatINR(normalizedBudget.total)}</span>
               </div>
             </div>
           ) : (
