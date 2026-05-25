@@ -3,20 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
-import {
-  FiMapPin,
-  FiDollarSign,
-  FiCalendar,
-  FiClock,
-  FiTrash2,
-  FiDownload,
-  FiSun,
-  FiArrowLeft,
-  FiCoffee,
-  FiHome,
-  FiMap,
-  FiCamera,
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import { tripAPI, weatherAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/TripDetails.css";
@@ -209,7 +196,7 @@ const TripDetails = () => {
         className="trip-header"
       >
         <button onClick={() => navigate("/dashboard")} className="back-btn">
-          <FiArrowLeft size={18} /> Back to Dashboard
+          <Icons.FiArrowLeft size={18} /> Back to Dashboard
         </button>
 
         <div className="trip-header-main">
@@ -217,14 +204,14 @@ const TripDetails = () => {
             <h1 className="trip-title">{trip.destination}</h1>
             <div className="trip-meta">
               <span className="meta-badge">
-                <FiCalendar size={14} /> {trip.days} days
+                <Icons.FiCalendar size={14} /> {trip.days} days
               </span>
               <span className="meta-badge">
-                <FiDollarSign size={14} />{" "}
+                <Icons.PiCurrencyInr size={14} />{" "}
                 {formatINR(trip.estimatedCost || trip.budget)}
               </span>
               <span className="meta-badge">
-                <FiMapPin size={14} /> {trip.travelStyle} travel
+                <Icons.FiMapPin size={14} /> {trip.travelStyle} travel
               </span>
             </div>
           </div>
@@ -234,13 +221,13 @@ const TripDetails = () => {
               onClick={handleExport}
               className="action-btn trip-export-btn"
             >
-              <FiDownload size={16} /> Export
+              <Icons.FiDownload size={16} /> Export
             </button>
             <button
               onClick={handleDelete}
               className="action-btn trip-delete-btn"
             >
-              <FiTrash2 size={16} /> Delete Trip
+              <Icons.FiTrash2 size={16} /> Delete Trip
             </button>
           </div>
         </div>
@@ -255,7 +242,7 @@ const TripDetails = () => {
           className="weather-card"
         >
           <h2 className="section-title">
-            <FiSun className="section-icon" /> Weather in {weather.city}
+            <Icons.FiSun className="section-icon" /> Weather in {weather.city}
           </h2>
           <div className="weather-grid">
             <div className="weather-item">
@@ -300,7 +287,7 @@ const TripDetails = () => {
                 {day.activities && day.activities.length > 0 && (
                   <div className="day-section">
                     <h4>
-                      <FiClock size={14} /> Activities
+                      <Icons.FiClock size={14} /> Activities
                     </h4>
                     <ul>
                       {day.activities.map((activity, i) => (
@@ -312,7 +299,7 @@ const TripDetails = () => {
                 {day.meals && day.meals.length > 0 && (
                   <div className="day-section">
                     <h4>
-                      <FiCoffee size={14} /> Meals
+                      <Icons.FiCoffee size={14} /> Meals
                     </h4>
                     <ul>
                       {day.meals.map((meal, i) => (
@@ -324,7 +311,7 @@ const TripDetails = () => {
                 {day.accommodation && (
                   <div className="day-section">
                     <h4>
-                      <FiHome size={14} /> Accommodation
+                      <Icons.FiHome size={14} /> Accommodation
                     </h4>
                     <p>{day.accommodation}</p>
                   </div>
@@ -332,7 +319,7 @@ const TripDetails = () => {
                 {day.transport && (
                   <div className="day-section">
                     <h4>
-                      <FiMap size={14} /> Transport
+                      <Icons.FiMap size={14} /> Transport
                     </h4>
                     <p>{day.transport}</p>
                   </div>
@@ -352,7 +339,7 @@ const TripDetails = () => {
           className="recommendation-card"
         >
           <h3>
-            <FiCamera size={18} /> Recommended Places
+            <Icons.FiCamera size={18} /> Recommended Places
           </h3>
           <ul>
             {itinerary?.recommendedPlaces?.map((place, idx) => (
@@ -371,7 +358,7 @@ const TripDetails = () => {
           className="recommendation-card"
         >
           <h3>
-            <FiCoffee size={18} /> Food Suggestions
+            <Icons.FiCoffee size={18} /> Food Suggestions
           </h3>
           <ul>
             {itinerary?.foodSuggestions?.map((food, idx) => (

@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FiMapPin,
-  FiDollarSign,
-  FiCalendar,
-  FiTrendingUp,
-  FiClock,
-  FiUser,
-  FiTrash2,
-  FiX
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import {
   BarChart,
   Bar,
@@ -147,28 +138,28 @@ const Dashboard = () => {
         className="stats-row"
       >
         <div className="stat-box">
-          <FiMapPin className="stat-icon-green" />
+          <Icons.FiMapPin className="stat-icon-green" />
           <div className="stat-info">
             <span className="stat-value">{stats.totalTrips}</span>
             <span className="stat-label">Total Trips</span>
           </div>
         </div>
         <div className="stat-box">
-          <FiDollarSign className="stat-icon-green" />
+          <Icons.PiCurrencyInr className="stat-icon-green" />
           <div className="stat-info">
             <span className="stat-value">{formatINR(stats.totalBudget)}</span>
             <span className="stat-label">Total Budget</span>
           </div>
         </div>
         <div className="stat-box">
-          <FiCalendar className="stat-icon-green" />
+          <Icons.FiCalendar className="stat-icon-green" />
           <div className="stat-info">
             <span className="stat-value">{stats.averageDays}</span>
             <span className="stat-label">Avg Days/Trip</span>
           </div>
         </div>
         <div className="stat-box">
-          <FiTrendingUp className="stat-icon-green" />
+          <Icons.FiTrendingUp className="stat-icon-green" />
           <div className="stat-info">
             <span className="stat-value">{stats.lastDestination}</span>
             <span className="stat-label">Last Destination</span>
@@ -229,18 +220,18 @@ const Dashboard = () => {
                   onClick={(e) => handleDeleteTrip(trip._id, e)}
                   title="Delete trip"
                 >
-                  <FiTrash2 size={14} />
+                  <Icons.FiTrash2 size={14} />
                 </button>
                 <div className="card-icon">
-                  <FiMapPin size={24} />
+                  <Icons.FiMapPin size={24} />
                 </div>
                 <h3>{trip.destination}</h3>
                 <div className="card-meta">
                   <span>
-                    <FiCalendar size={12} /> {trip.days} days
+                    <Icons.FiCalendar size={12} /> {trip.days} days
                   </span>
                   <span>
-                    <FiDollarSign size={12} />{" "}
+                    <Icons.PiCurrencyInr size={12} />{" "}
                     {formatINR(trip.estimatedCost || trip.budget)}
                   </span>
                 </div>
@@ -272,7 +263,7 @@ const Dashboard = () => {
                 className="modal-close"
                 onClick={() => setShowAllTripsModal(false)}
               >
-                <FiX size={24} />
+                <Icons.FiX size={24} />
               </button>
             </div>
             <div className="modal-body">
@@ -303,7 +294,7 @@ const Dashboard = () => {
                         handleDeleteTrip(trip._id, e);
                       }}
                     >
-                      <FiTrash2 size={14} />
+                      <Icons.FiTrash2 size={14} />
                     </button>
                   </div>
                 ))}

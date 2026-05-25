@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiHome, FiMap } from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import "../styles/pages/NotFound.css";
 
 const NotFound = () => {
@@ -33,10 +33,10 @@ const NotFound = () => {
 
         <div className="notfound-buttons">
           <Link to="/" className="home-btn">
-            <FiHome size={18} /> Go to Homepage
+            <Icons.FiHome size={18} /> Go to Homepage
           </Link>
           <Link to="/dashboard" className="dashboard-btn">
-            <FiMap size={18} /> Go to Dashboard
+            <Icons.FiMap size={18} /> Go to Dashboard
           </Link>
         </div>
 

@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FiMapPin,
-  FiCalendar,
-  FiDollarSign,
-  FiCompass,
-  FiHeart,
-  FiLoader,
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/CreateTrip.css";
@@ -89,7 +82,7 @@ const CreateTrip = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>
-              <FiMapPin /> Destination
+              <Icons.FiMapPin /> Destination
             </label>
             <input
               type="text"
@@ -105,7 +98,7 @@ const CreateTrip = () => {
           <div className="form-row">
             <div className="form-group">
               <label>
-                <FiCalendar /> Number of Days
+                <Icons.FiCalendar /> Number of Days
               </label>
               <input
                 type="number"
@@ -121,7 +114,7 @@ const CreateTrip = () => {
 
             <div className="form-group">
               <label>
-                <FiDollarSign /> Budget
+                <Icons.PiCurrencyInr /> Budget
               </label>
               <input
                 type="number"
@@ -160,7 +153,7 @@ const CreateTrip = () => {
 
           <div className="form-group">
             <label>
-              <FiCompass /> Travel Style
+              <Icons.FiCompass /> Travel Style
             </label>
             <div className="styles-grid">
               {travelStyles.map((style) => (
@@ -184,7 +177,7 @@ const CreateTrip = () => {
 
           <div className="form-group">
             <label>
-              <FiHeart /> Interests
+              <Icons.FiHeart /> Interests
             </label>
             <div className="interests-grid">
               {interestOptions.map((interest) => (
@@ -203,7 +196,7 @@ const CreateTrip = () => {
           <button type="submit" disabled={loading} className="submit-btn">
             {loading ? (
               <>
-                <FiLoader className="spinning" /> Generating Your Trip...
+                <Icons.FiLoader className="spinning" /> Generating Your Trip...
               </>
             ) : (
               "Generate AI Itinerary"

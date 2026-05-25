@@ -1,16 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  FiSend,
-  FiUser,
-  FiMic,
-  FiMicOff,
-  FiTrash2,
-  FiHelpCircle,
-  FiCopy,
-  FiThumbsUp,
-  FiThumbsDown,
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import { FaRobot } from "react-icons/fa";
 import { aiAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
@@ -212,7 +202,7 @@ const ChatAssistant = () => {
               className="clear-chat-btn"
               title="Clear chat"
             >
-              <FiTrash2 size={18} />
+              <Icons.FiTrash2 size={18} />
             </button>
           </div>
 
@@ -232,9 +222,9 @@ const ChatAssistant = () => {
                   >
                     <div className="message-avatar">
                       {message.type === "user" ? (
-                        <FiUser size={14} />
+                        <Icons.FiFiUser size={14} />
                       ) : (
-                        <FaRobot size={14} />
+                        <Icons.FaRobot size={14} />
                       )}
                     </div>
                     <div className="message-content">
@@ -256,7 +246,7 @@ const ChatAssistant = () => {
                               onClick={() => copyMessage(message.content)}
                               title="Copy"
                             >
-                              <FiCopy size={12} />
+                              <Icons.FiCopy size={12} />
                             </button>
                           </div>
                         )}
@@ -297,7 +287,7 @@ const ChatAssistant = () => {
                 className={`voice-btn ${isListening ? "listening" : ""}`}
                 title={isListening ? "Listening..." : "Voice input"}
               >
-                {isListening ? <FiMicOff size={18} /> : <FiMic size={18} />}
+                {isListening ? <Icons.FiMicOff size={18} /> : <Icons.FiMic size={18} />}
               </button>
               <textarea
                 ref={inputRef}
@@ -314,7 +304,7 @@ const ChatAssistant = () => {
                 className="send-btn"
                 title="Send message"
               >
-                <FiSend size={18} />
+                <Icons.FiSend size={18} />
               </button>
             </div>
             <div className="input-hint">
@@ -327,7 +317,7 @@ const ChatAssistant = () => {
         <div className="chat-sidebar">
           <div className="suggestions-card">
             <h3>
-              <FiHelpCircle size={18} /> Suggested Questions
+              <Icons.FiHelpCircle size={18} /> Suggested Questions
             </h3>
             <div className="suggestions-list">
               {suggestedQuestions.map((question, idx) => (
