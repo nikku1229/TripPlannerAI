@@ -1,4 +1,3 @@
-// routes/trip.routes.js
 const express = require("express");
 const tripController = require("../controllers/trip.controller");
 const authMiddleware = require("../middleware/auth");

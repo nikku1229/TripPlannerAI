@@ -71,7 +71,6 @@ const Dashboard = () => {
     }
   };
 
-  // Calculate statistics
   const stats = {
     totalTrips: trips.length,
     totalBudget: trips.reduce(
@@ -125,7 +124,6 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      {/* Welcome Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
