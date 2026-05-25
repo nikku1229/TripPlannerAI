@@ -9,6 +9,7 @@ import {
   FiClock,
   FiUser,
   FiTrash2,
+  FiX
 } from "react-icons/fi";
 import {
   BarChart,
