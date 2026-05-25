@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Icons from "../utils/icons/index";
-import { FaRobot } from "react-icons/fa";
 import { aiAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/ChatAssistant.css";
@@ -190,7 +189,7 @@ const ChatAssistant = () => {
           <div className="chat-header">
             <div className="chat-header-info">
               <div className="chat-avatar">
-                <FaRobot size={20} />
+                <Icons.FaRobot size={20} />
               </div>
               <div>
                 <h2>AI Travel Assistant</h2>
@@ -222,7 +221,7 @@ const ChatAssistant = () => {
                   >
                     <div className="message-avatar">
                       {message.type === "user" ? (
-                        <Icons.FiFiUser size={14} />
+                        <Icons.FiUser size={14} />
                       ) : (
                         <Icons.FaRobot size={14} />
                       )}
@@ -265,7 +264,7 @@ const ChatAssistant = () => {
               >
                 <div className="message-bubble bot">
                   <div className="message-avatar">
-                    <FaRobot size={14} />
+                    <Icons.FaRobot size={14} />
                   </div>
                   <div className="typing-indicator">
                     <span></span>
@@ -287,7 +286,11 @@ const ChatAssistant = () => {
                 className={`voice-btn ${isListening ? "listening" : ""}`}
                 title={isListening ? "Listening..." : "Voice input"}
               >
-                {isListening ? <Icons.FiMicOff size={18} /> : <Icons.FiMic size={18} />}
+                {isListening ? (
+                  <Icons.FiMicOff size={18} />
+                ) : (
+                  <Icons.FiMic size={18} />
+                )}
               </button>
               <textarea
                 ref={inputRef}
