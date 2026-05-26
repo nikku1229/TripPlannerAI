@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
-import { FiMail, FiLock, FiUser, FiEye, FiEyeOff } from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import "../styles/pages/Register.css";
 
 const Register = () => {
@@ -70,7 +70,7 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
             <label>
-              <FiUser size={16} /> Full Name
+              <Icons.FiUser size={16} /> Full Name
             </label>
             <div className="input-wrapper">
               <input
@@ -86,7 +86,7 @@ const Register = () => {
 
           <div className="form-group">
             <label>
-              <FiMail size={16} /> Email
+              <Icons.FiMail size={16} /> Email
             </label>
             <div className="input-wrapper">
               <input
@@ -102,7 +102,7 @@ const Register = () => {
 
           <div className="form-group">
             <label>
-              <FiLock size={16} /> Password
+              <Icons.FiLock size={16} /> Password
             </label>
             <div className="input-wrapper">
               <input
@@ -118,14 +118,14 @@ const Register = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="password-toggle"
               >
-                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+                {showPassword ? <Icons.FiEyeOff size={18} /> : <Icons.FiEye size={18} />}
               </button>
             </div>
           </div>
 
           <div className="form-group">
             <label>
-              <FiLock size={16} /> Confirm Password
+              <Icons.FiLock size={16} /> Confirm Password
             </label>
             <div className="input-wrapper">
               <input
@@ -142,9 +142,9 @@ const Register = () => {
                 className="password-toggle"
               >
                 {showConfirmPassword ? (
-                  <FiEyeOff size={18} />
+                  <Icons.FiEyeOff size={18} />
                 ) : (
-                  <FiEye size={18} />
+                  <Icons.FiEye size={18} />
                 )}
               </button>
             </div>

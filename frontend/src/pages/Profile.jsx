@@ -1,23 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  FiUser,
-  FiMail,
-  FiCalendar,
-  FiEdit2,
-  FiSave,
-  FiX,
-  FiMapPin,
-  FiDollarSign,
-  FiGlobe,
-  FiClock,
-  FiTrendingUp,
-  FiAward,
-  FiStar,
-  FiCompass,
-  FiBell,
-  FiCreditCard,
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
+import { formatINR } from "../hooks/currency";
 import { useAuth } from "../context/AuthContext";
 import { tripAPI, profileAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
@@ -59,13 +43,6 @@ const Profile = () => {
     fetchUserTrips();
     loadUserPreferences();
   }, []);
-
-  const formatINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   const formatCurrency = (amount, currency = "INR") => {
     return new Intl.NumberFormat("en-IN", {
@@ -185,25 +162,25 @@ const Profile = () => {
     {
       label: "Total Trips",
       value: stats.totalTrips,
-      icon: FiMapPin,
+      icon: Icons.FiMapPin,
       color: "#0d530e",
     },
     {
       label: "Total Budget",
       value: formatINR(stats.totalBudget),
-      icon: FiDollarSign,
+      icon: Icons.PiCurrencyInr,
       color: "#0d530e",
     },
     {
       label: "Days Traveled",
       value: stats.totalDays,
-      icon: FiClock,
+      icon: Icons.FiClock,
       color: "#0d530e",
     },
     {
       label: "Destinations",
       value: stats.uniqueDestinations,
-      icon: FiGlobe,
+      icon: Icons.FiGlobe,
       color: "#0d530e",
     },
   ];
@@ -212,19 +189,19 @@ const Profile = () => {
     {
       label: "Favorite Destination",
       value: stats.favoriteDestination,
-      icon: FiStar,
+      icon: Icons.FiStar,
       color: "#0d530e",
     },
     {
       label: "Avg Budget/Day",
       value: `₹${formatINR(stats.averageBudgetPerDay)}`,
-      icon: FiTrendingUp,
+      icon: Icons.FiTrendingUp,
       color: "#0d530e",
     },
     {
       label: "Adventure Score",
       value: "Explorer",
-      icon: FiAward,
+      icon: Icons.FiAward,
       color: "#0d530e",
     },
   ];
@@ -237,7 +214,7 @@ const Profile = () => {
     return `${score}%`;
   }
 
-  const recentTrips = trips.slice(0, 4);
+  const recentTrips = trips.slice(0, 3);
 
   const navigateToTrip = (tripId) => {
     window.location.href = `/trip/${tripId}`;
@@ -261,7 +238,7 @@ const Profile = () => {
               onClick={() => setIsEditing(true)}
               title="Edit Profile"
             >
-              <FiEdit2 size={14} />
+              <Icons.FiEdit2 size={14} />
             </button>
           </div>
 
@@ -334,14 +311,14 @@ const Profile = () => {
                     disabled={loading}
                     className="save-profile-btn"
                   >
-                    <FiSave size={16} />{" "}
+                    <Icons.FiSave size={16} />{" "}
                     {loading ? "Saving..." : "Save Changes"}
                   </button>
                   <button
                     onClick={() => setIsEditing(false)}
                     className="cancel-profile-btn"
                   >
-                    <FiX size={16} /> Cancel
+                    <Icons.FiX size={16} /> Cancel
                   </button>
                 </div>
               </div>
@@ -354,11 +331,11 @@ const Profile = () => {
                 </p>
                 <div className="profile-info-grid">
                   <div className="profile-info-item">
-                    <FiMail size={14} />
+                    <Icons.FiMail size={14} />
                     <span>{user?.email}</span>
                   </div>
                   <div className="profile-info-item">
-                    <FiCalendar size={14} />
+                    <Icons.FiCalendar size={14} />
                     <span>
                       Member since{" "}
                       {new Date(
@@ -369,14 +346,14 @@ const Profile = () => {
 
                   {user?.phone && (
                     <div className="profile-info-item">
-                      <FiUser size={14} />
+                      <Icons.FiUser size={14} />
                       <span>{user.phone}</span>
                     </div>
                   )}
 
                   {user?.location && (
                     <div className="profile-info-item">
-                      <FiMapPin size={14} />
+                      <Icons.FiMapPin size={14} />
                       <span>{user.location}</span>
                     </div>
                   )}
@@ -494,7 +471,7 @@ const Profile = () => {
               onClick={() => setIsEditingPreferences(true)}
               className="edit-preferences-btn"
             >
-              <FiEdit2 size={14} /> Edit
+              <Icons.FiEdit2 size={14} /> Edit
             </button>
           )}
         </div>
@@ -614,14 +591,14 @@ const Profile = () => {
                 disabled={loading}
                 className="save-preferences-btn"
               >
-                <FiSave size={16} />{" "}
+                <Icons.FiSave size={16} />{" "}
                 {loading ? "Saving..." : "Save Preferences"}
               </button>
               <button
                 onClick={() => setIsEditingPreferences(false)}
                 className="cancel-preferences-btn"
               >
-                <FiX size={16} /> Cancel
+                <Icons.FiX size={16} /> Cancel
               </button>
             </div>
           </div>

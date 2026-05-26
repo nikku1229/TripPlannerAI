@@ -1,27 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  FiMapPin,
-  FiCalendar,
-  FiDollarSign,
-  FiEye,
-  FiTrash2,
-} from "react-icons/fi";
+import Icons from "../utils/icons/index";
+import { formatINR } from "../hooks/currency";
 import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/components/TripCard.css";
 
-const TripCard = ({ trip, onDelete, compact = false }) => {
+const TripCard = () => {
   const navigate = useNavigate();
-
-  const formatINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   const handleDelete = async (e) => {
     e.stopPropagation();
@@ -52,16 +39,16 @@ const TripCard = ({ trip, onDelete, compact = false }) => {
             <h4 className="trip-title-compact">{trip.destination}</h4>
             <div className="trip-meta-compact">
               <span>
-                <FiCalendar size={12} /> {trip.days}d
+                <Icons.FiCalendar size={12} /> {trip.days}d
               </span>
               <span>
-                <FiDollarSign size={12} />{" "}
+                <Icons.PiCurrencyInr size={12} />{" "}
                 {formatINR(trip.estimatedCost || trip.budget)}
               </span>
             </div>
           </div>
           <button onClick={handleDelete} className="delete-btn-compact">
-            <FiTrash2 size={14} />
+            <Icons.FiTrash2 size={14} />
           </button>
         </div>
       </motion.div>
@@ -92,21 +79,21 @@ const TripCard = ({ trip, onDelete, compact = false }) => {
           className="delete-btn"
           title="Delete trip"
         >
-          <FiTrash2 size={16} />
+          <Icons.FiTrash2 size={16} />
         </button>
       </div>
 
       <div className="trip-card-details">
         <div className="trip-meta">
           <span className="trip-meta-item">
-            <FiCalendar size={14} /> {trip.days} days
+            <Icons.FiCalendar size={14} /> {trip.days} days
           </span>
           <span className="trip-meta-item">
-            <FiDollarSign size={14} />{" "}
+            <Icons.PiCurrencyInr size={14} />{" "}
             {formatINR(trip.estimatedCost || trip.budget)}
           </span>
           <span className="trip-meta-item">
-            <FiMapPin size={14} /> {trip.travelStyle}
+            <Icons.FiMapPin size={14} /> {trip.travelStyle}
           </span>
         </div>
 
@@ -126,7 +113,7 @@ const TripCard = ({ trip, onDelete, compact = false }) => {
         )}
 
         <button className="view-details-btn">
-          <FiEye size={14} /> View Details
+          <Icons.FiEye size={14} /> View Details
         </button>
       </div>
     </motion.div>

@@ -1,0 +1,33 @@
+import {
+  FiTrash2,
+  FiEdit2,
+  FiSave,
+  FiCopy,
+  FiEye,
+  FiEyeOff,
+  FiSend,
+  FiMic,
+  FiMicOff,
+  FiDownload,
+  FiHelpCircle,
+  FiThumbsUp,
+  FiThumbsDown,
+  FiPlus,
+} from "react-icons/fi";
+
+export const actionIcons = {
+  FiTrash2,
+  FiEdit2,
+  FiSave,
+  FiCopy,
+  FiEye,
+  FiEyeOff,
+  FiSend,
+  FiMic,
+  FiMicOff,
+  FiDownload,
+  FiHelpCircle,
+  FiThumbsUp,
+  FiThumbsDown,
+  FiPlus,
+};

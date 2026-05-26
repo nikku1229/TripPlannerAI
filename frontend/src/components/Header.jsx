@@ -12,8 +12,8 @@ const Header = () => {
       <div className="header-container">
         <div className="header-logo">
           <Link to="/">
-            <img src={Logo} alt="TravelAI Logo" className="logo-image" />
-            <span className="logo-text">TravelAI</span>
+            <img src={Logo} alt="TripAI Logo" className="logo-image" />
+            <span className="logo-text">TripAI</span>
           </Link>
         </div>
         <nav className="header-nav">

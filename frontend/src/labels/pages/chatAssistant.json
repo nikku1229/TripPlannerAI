@@ -1,0 +1,26 @@
+{
+  "assistantTitleHead": "AI Travel Assistant",
+  "assistantTextHead": "Online • Ready to help",
+  "suggestedQuestionsTitle": "Suggested Questions",
+  "suggestedQuestions": [
+    "What's the best time to visit Japan?",
+    "Budget travel tips for Europe",
+    "Hidden gems in Italy",
+    "Local food recommendations in Thailand",
+    "How to save money on flights?",
+    "Best beach destinations in December"
+  ],
+  "messageInputContent": "Hello! 👋 I'm your AI travel assistant. I can help you with:\n\n• ✈️ **Destination recommendations**\n• 💰 **Budget planning & tips**\n• 🏨 **Accommodation suggestions**\n• 🍜 **Local food & culture**\n• 🌤️ **Weather & best time to visit**\n• 🎒 **Packing guides**\n\nAsk me anything about your next adventure!",
+  "clearMessageContent": "Chat cleared! How can I help you with your travel plans? ✈️",
+  "quickTipsTitle": "Quick Tips",
+  "quickTips": [
+    "• Ask about specific destinations",
+    "• Request budget breakdowns",
+    "• Get local food recommendations",
+    "• Learn about hidden gems",
+    "• Check weather patterns",
+    "• Get packing suggestions"
+  ],
+  "inputHint": "Press Enter to send, Shift+Enter for new line",
+  "inputPlaceholderText": "Ask me anything about travel..."
+}

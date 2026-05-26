@@ -1,0 +1,33 @@
+import {
+  FiMapPin,
+  FiCalendar,
+  FiDollarSign,
+  FiClock,
+  FiSun,
+  FiCloud,
+  FiMap,
+  FiCamera,
+  FiCoffee,
+  FiHome,
+  FiTrendingUp,
+  FiAward,
+  FiStar,
+  FiGlobe,
+} from "react-icons/fi";
+
+export const travelIcons = {
+  FiMapPin,
+  FiCalendar,
+  FiDollarSign,
+  FiClock,
+  FiSun,
+  FiCloud,
+  FiMap,
+  FiCamera,
+  FiCoffee,
+  FiHome,
+  FiTrendingUp,
+  FiAward,
+  FiStar,
+  FiGlobe,
+};
