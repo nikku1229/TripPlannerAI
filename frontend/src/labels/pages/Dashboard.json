@@ -1,0 +1,24 @@
+{
+  "dashBoardTitleHead": "Welcome back, ",
+  "dashBoardTextHead": "Track your adventures and plan new journeys",
+  "dashboardUserAvatarText": "View Profile",
+  "recentTripTitle": "Recent Trips",
+  "stats": {
+    "totalTripText": "Total Trips",
+    "totalBudgetText": "Total Budget",
+    "averageTripText": "Avg Days/Trip",
+    "lastDestinationText": "Last Destination"
+  },
+  "tripAddBtnText": "+ New Trip",
+  "viewAllTripBtnText": "View All",
+  "travelInsightTitle": "Travel Insights",
+  "emptyTrip": {
+    "emptyTripTitle": "No trips yet",
+    "emptyTripText": "Start planning your first adventure!",
+    "createTripBtnText": "Create Your First Trip"
+  },
+  "chartField": {
+    "barChartTitle": "Budget per Trip",
+    "pieChartTitle": "Days per Trip"
+  }
+}

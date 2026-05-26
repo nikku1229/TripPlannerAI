@@ -1,0 +1,43 @@
+{
+  "createTripTitleHead": "Create Your Dream Trip",
+  "createTripTextHead": "Let AI plan the perfect itinerary tailored just for you",
+  "travelStyles": [
+    { "value": "luxury", "label": "Luxury", "icon": "👑", "minBudget": 80000 },
+    {
+      "value": "moderate",
+      "label": "Moderate",
+      "icon": "⭐",
+      "minBudget": 30000
+    },
+    { "value": "budget", "label": "Budget", "icon": "💰", "minBudget": 10000 }
+  ],
+  "interestOptions": [
+    "Adventure",
+    "Culture",
+    "Food",
+    "Nature",
+    "Relaxation",
+    "Shopping",
+    "Nightlife",
+    "History",
+    "Art",
+    "Photography"
+  ],
+  "formField": {
+    "destinationLabel": "Destination",
+    "destinationInputPlaceholder": "e.g., Manali, Goa, Jaipur, Paris, Tokyo",
+    "daysLabel": "Number of Days",
+    "budgetLabel": "Budget",
+    "budgetRangeLabel": "Budget Range",
+    "budgetRangeMinMax": {
+      "budgetMinRange": "₹10,000",
+      "budgetMaxRange": "₹5,00,000+"
+    },
+    "travelStyleLabel": "Travel Style",
+    "interestLabel": "Interests"
+  },
+  "buttonText": {
+    "static": "Generate AI Itinerary",
+    "loading": "Generating Your Trip..."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "heroBannerTitle": "AI Trip Planner",
+  "heroBannerDesc": "Plan your perfect trip with AI-powered itineraries, real-time weather, and interactive maps",
+  "homeBtns": {
+    "dashboardBtn": "Dashboard",
+    "registerBtn": "Get Started"
+  }
+}

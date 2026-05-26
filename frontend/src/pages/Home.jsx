@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FiMap, FiCpu, FiCloud, FiTrendingUp } from "react-icons/fi";
+import Icons from "../utils/icons/index";
 import { useAuth } from "../context/AuthContext";
 import Header from "../components/Header";
 import labels from "../labels/common";
@@ -11,19 +11,19 @@ const Home = () => {
 
   const usps = [
     {
-      icon: FiCpu,
+      icon: Icons.FiCpu,
       title: "AI-Powered Planning",
     },
     {
-      icon: FiMap,
+      icon: Icons.FiMap,
       title: "Interactive Maps",
     },
     {
-      icon: FiCloud,
+      icon: Icons.FiCloud,
       title: "Real-time Weather",
     },
     {
-      icon: FiTrendingUp,
+      icon: Icons.FiTrendingUp,
       title: "Budget Tracking",
     },
   ];
@@ -41,10 +41,10 @@ const Home = () => {
             </div>
             <div className="hero-btn">
               <Link to="/dashboard" className="secondary-btn">
-                Dashboard
+                {labels.homeBtns.dashboardBtn}
               </Link>
               <Link to="/register" className="primary-btn">
-                Get Started
+                {labels.homeBtns.registerBtn}
               </Link>
             </div>
           </div>
