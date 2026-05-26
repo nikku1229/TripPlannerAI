@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import Icons from "../utils/icons/index";
+import { formatINR } from "../hooks/currency";
 import { tripAPI, weatherAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/pages/TripDetails.css";
@@ -55,7 +56,7 @@ const getCoordinates = async (destination) => {
       {
         headers: {
           Accept: "application/json",
-          "User-Agent": "TravelAI-App/1.0",
+          "User-Agent": "TripAI-App/1.0",
         },
       },
     );
@@ -81,13 +82,6 @@ const TripDetails = () => {
   useEffect(() => {
     fetchTripDetails();
   }, [id]);
-
-  const formatINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   const fetchTripDetails = async () => {
     try {

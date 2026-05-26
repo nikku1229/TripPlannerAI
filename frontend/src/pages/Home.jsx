@@ -41,10 +41,10 @@ const Home = () => {
             </div>
             <div className="hero-btn">
               <Link to="/dashboard" className="secondary-btn">
-                Dashboard
+                {labels.homeBtns.dashboardBtn}
               </Link>
               <Link to="/register" className="primary-btn">
-                Get Started
+                {labels.homeBtns.registerBtn}
               </Link>
             </div>
           </div>

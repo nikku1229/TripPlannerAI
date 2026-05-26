@@ -2,20 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Icons from "../utils/icons/index";
+import { formatINR } from "../hooks/currency";
 import { tripAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 import "../styles/components/TripCard.css";
 
-const TripCard = ({ trip, onDelete, compact = false }) => {
+const TripCard = () => {
   const navigate = useNavigate();
-
-  const formatINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   const handleDelete = async (e) => {
     e.stopPropagation();

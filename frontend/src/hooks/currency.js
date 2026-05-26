@@ -7,10 +7,6 @@ export const formatINR = (amount) => {
   }).format(amount);
 };
 
-export const formatNumberINR = (amount) => {
-  return new Intl.NumberFormat("en-IN").format(amount);
-};
-
 export const getBudgetSuggestion = (destination, days) => {
   const suggestions = {
     goa: { budget: 3000, moderate: 6000, luxury: 15000 },

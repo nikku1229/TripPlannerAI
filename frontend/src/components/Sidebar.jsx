@@ -73,7 +73,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               >
                 <div className="mobile-sidebar-header">
                   <div className="sidebar-logo">
-                    <Link to="/">TravelAI</Link>
+                    <Link to="/">TripAI</Link>
                   </div>
                   <button onClick={closeMobileMenu} className="close-btn">
                     <Icons.FiX size={24} />
@@ -127,7 +127,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               exit={{ opacity: 0 }}
               className="sidebar-logo"
             >
-              <Link to="/">TravelAI</Link>
+              <Link to="/">TripAI</Link>
             </motion.div>
           ) : (
             <motion.div
@@ -137,7 +137,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               className="sidebar-logo-icon"
             >
               <Link to="/">
-                <img src={Logo} alt="TravelAI" />
+                <img src={Logo} alt="TripAI" />
               </Link>
             </motion.div>
           )}

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Icons from "../utils/icons/index";
-import { tripAPI } from "../services/servicesApi";
-import toast from "react-hot-toast";
-import "../styles/pages/CreateTrip.css";
+import labels from "../labels/common";
+import { formatINR } from "../hooks/currency";
+import { handleSubmit } from "../hooks/createTripHook";
 
 const CreateTrip = () => {
   const navigate = useNavigate();
@@ -12,29 +12,10 @@ const CreateTrip = () => {
   const [formData, setFormData] = useState({
     destination: "",
     days: 3,
-    budget: 30000,
+    budget: 20000,
     travelStyle: "moderate",
     interests: [],
   });
-
-  const travelStyles = [
-    { value: "luxury", label: "Luxury", icon: "👑", minBudget: 80000 },
-    { value: "moderate", label: "Moderate", icon: "⭐", minBudget: 30000 },
-    { value: "budget", label: "Budget", icon: "💰", minBudget: 10000 },
-  ];
-
-  const interestOptions = [
-    "Adventure",
-    "Culture",
-    "Food",
-    "Nature",
-    "Relaxation",
-    "Shopping",
-    "Nightlife",
-    "History",
-    "Art",
-    "Photography",
-  ];
 
   const handleInterestToggle = (interest) => {
     setFormData((prev) => ({
@@ -45,44 +26,21 @@ const CreateTrip = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (formData.interests.length === 0) {
-      toast.error("Please select at least one interest");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await tripAPI.generate({ ...formData, currency: "INR" });
-      toast.success("Trip generated successfully!");
-      navigate(`/trip/${response.data.trip._id}`);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to generate trip");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatBudget = (value) => {
-    return new Intl.NumberFormat("en-IN", {
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
   return (
     <div className="create-trip-container">
       <div className="create-trip-card">
-        <h1 className="gradient-text">Create Your Dream Trip</h1>
-        <p className="subtitle">
-          Let AI plan the perfect itinerary tailored just for you
-        </p>
+        <h1 className="gradient-text">{labels.createTripTitleHead}</h1>
+        <p className="subtitle">{labels.createTripTextHead}</p>
 
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(formData, setLoading, navigate);
+          }}
+        >
           <div className="form-group">
             <label>
-              <Icons.FiMapPin /> Destination
+              <Icons.FiMapPin /> {labels.formField.destinationLabel}
             </label>
             <input
               type="text"
@@ -90,7 +48,7 @@ const CreateTrip = () => {
               onChange={(e) =>
                 setFormData({ ...formData, destination: e.target.value })
               }
-              placeholder="e.g., Manali, Goa, Jaipur, Paris, Tokyo"
+              placeholder={labels.formField.destinationInputPlaceholder}
               required
             />
           </div>
@@ -98,7 +56,7 @@ const CreateTrip = () => {
           <div className="form-row">
             <div className="form-group">
               <label>
-                <Icons.FiCalendar /> Number of Days
+                <Icons.FiCalendar /> {labels.formField.daysLabel}
               </label>
               <input
                 type="number"
@@ -114,7 +72,7 @@ const CreateTrip = () => {
 
             <div className="form-group">
               <label>
-                <Icons.PiCurrencyInr /> Budget
+                <Icons.PiCurrencyInr /> {labels.formField.budgetLabel}
               </label>
               <input
                 type="number"
@@ -127,15 +85,14 @@ const CreateTrip = () => {
                 required
               />
               <small>
-                Current: ₹{formatBudget(formData.budget)} for {formData.days}{" "}
-                days
+                Current: ₹{formatINR(formData.budget)} for {formData.days} days
               </small>
             </div>
           </div>
 
           <div className="budget-range">
             <div className="budget-range-label">
-              <span>Budget Range</span>
+              <span>{labels.formField.budgetRangeLabel}</span>
             </div>
             <div className="budget-bar">
               <div
@@ -146,60 +103,63 @@ const CreateTrip = () => {
               ></div>
             </div>
             <div className="budget-range-label" style={{ marginTop: "6px" }}>
-              <span>₹10,000</span>
-              <span>₹5,00,000+</span>
+              <span>{labels.formField.budgetRangeMinMax.budgetMinRange}</span>
+              <span>{labels.formField.budgetRangeMinMax.budgetMaxRange}</span>
             </div>
           </div>
 
           <div className="form-group">
             <label>
-              <Icons.FiCompass /> Travel Style
+              <Icons.FiCompass /> {labels.formField.travelStyleLabel}
             </label>
             <div className="styles-grid">
-              {travelStyles.map((style) => (
-                <button
-                  key={style.value}
-                  type="button"
-                  onClick={() =>
-                    setFormData({ ...formData, travelStyle: style.value })
-                  }
-                  className={`style-btn ${formData.travelStyle === style.value ? "active" : ""}`}
-                >
-                  <div className="style-icon">{style.icon}</div>
-                  <div className="style-label">{style.label}</div>
-                  <div className="style-budget">
-                    From ₹{style.minBudget.toLocaleString()}
-                  </div>
-                </button>
-              ))}
+              {labels?.travelStyles &&
+                labels?.travelStyles.map((style) => (
+                  <button
+                    key={style.value}
+                    type="button"
+                    onClick={() =>
+                      setFormData({ ...formData, travelStyle: style.value })
+                    }
+                    className={`style-btn ${formData.travelStyle === style.value ? "active" : ""}`}
+                  >
+                    <div className="style-icon">{style.icon}</div>
+                    <div className="style-label">{style.label}</div>
+                    <div className="style-budget">
+                      From ₹{style.minBudget.toLocaleString()}
+                    </div>
+                  </button>
+                ))}
             </div>
           </div>
 
           <div className="form-group">
             <label>
-              <Icons.FiHeart /> Interests
+              <Icons.FiHeart /> {labels.formField.interestLabel}
             </label>
             <div className="interests-grid">
-              {interestOptions.map((interest) => (
-                <button
-                  key={interest}
-                  type="button"
-                  onClick={() => handleInterestToggle(interest)}
-                  className={`interest-btn ${formData.interests.includes(interest) ? "active" : ""}`}
-                >
-                  {interest}
-                </button>
-              ))}
+              {labels?.interestOptions &&
+                labels?.interestOptions.map((interest) => (
+                  <button
+                    key={interest}
+                    type="button"
+                    onClick={() => handleInterestToggle(interest)}
+                    className={`interest-btn ${formData.interests.includes(interest) ? "active" : ""}`}
+                  >
+                    {interest}
+                  </button>
+                ))}
             </div>
           </div>
 
           <button type="submit" disabled={loading} className="submit-btn">
             {loading ? (
               <>
-                <Icons.FiLoader className="spinning" /> Generating Your Trip...
+                <Icons.FiLoader className="spinning" />{" "}
+                {labels.buttonText.loading}
               </>
             ) : (
-              "Generate AI Itinerary"
+              labels.buttonText.static
             )}
           </button>
         </form>

@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Icons from "../utils/icons/index";
-import { aiAPI } from "../services/servicesApi";
+import { copyMessage, clearChat } from "../utils/usage";
+import { sendMessage, toggleVoiceInput } from "../hooks/chatAssistantHook";
+import labels from "../labels/common";
 import toast from "react-hot-toast";
 import "../styles/pages/ChatAssistant.css";
 
@@ -10,8 +12,7 @@ const ChatAssistant = () => {
     {
       id: 1,
       type: "bot",
-      content:
-        "Hello! 👋 I'm your AI travel assistant. I can help you with:\n\n• ✈️ **Destination recommendations**\n• 💰 **Budget planning & tips**\n• 🏨 **Accommodation suggestions**\n• 🍜 **Local food & culture**\n• 🌤️ **Weather & best time to visit**\n• 🎒 **Packing guides**\n\nAsk me anything about your next adventure!",
+      content: labels.messageInputContent,
       timestamp: new Date(),
     },
   ]);
@@ -56,7 +57,6 @@ const ChatAssistant = () => {
         );
       }
 
-      // Check for bold text
       const boldRegex = /\*\*(.*?)\*\*/g;
       if (boldRegex.test(paragraph)) {
         const parts = paragraph.split(boldRegex);
@@ -76,111 +76,12 @@ const ChatAssistant = () => {
     });
   };
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMessage = {
-      id: Date.now(),
-      type: "user",
-      content: input,
-      timestamp: new Date(),
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-    setLoading(true);
-
-    try {
-      const response = await aiAPI.chat(input, "Travel planning");
-      const botMessage = {
-        id: Date.now() + 1,
-        type: "bot",
-        content: response.data.reply,
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, botMessage]);
-    } catch (error) {
-      toast.error("Failed to get response");
-      const errorMessage = {
-        id: Date.now() + 1,
-        type: "bot",
-        content:
-          "Sorry, I'm having trouble connecting. Please try again later.",
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, errorMessage]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      sendMessage(input, setMessages, setInput, setLoading);
     }
   };
-
-  const clearChat = () => {
-    setMessages([
-      {
-        id: Date.now(),
-        type: "bot",
-        content: "Chat cleared! How can I help you with your travel plans? ✈️",
-        timestamp: new Date(),
-      },
-    ]);
-    toast.success("Chat cleared");
-  };
-
-  const copyMessage = (content) => {
-    navigator.clipboard.writeText(content);
-    toast.success("Copied to clipboard!");
-  };
-
-  const toggleVoiceInput = () => {
-    if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-      const SpeechRecognition =
-        window.webkitSpeechRecognition || window.SpeechRecognition;
-      const recognition = new SpeechRecognition();
-
-      recognition.continuous = false;
-      recognition.interimResults = false;
-      recognition.lang = "en-US";
-
-      recognition.onstart = () => {
-        setIsListening(true);
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        setInput(transcript);
-        setIsListening(false);
-      };
-
-      recognition.onerror = () => {
-        setIsListening(false);
-        toast.error("Voice recognition failed");
-      };
-
-      recognition.onend = () => {
-        setIsListening(false);
-      };
-
-      recognition.start();
-    } else {
-      toast.error("Voice recognition not supported in your browser");
-    }
-  };
-
-  const suggestedQuestions = [
-    "What's the best time to visit Japan?",
-    "Budget travel tips for Europe",
-    "Hidden gems in Italy",
-    "Local food recommendations in Thailand",
-    "How to save money on flights?",
-    "Best beach destinations in December",
-  ];
 
   return (
     <div className="chat-container">
@@ -192,12 +93,14 @@ const ChatAssistant = () => {
                 <Icons.FaRobot size={20} />
               </div>
               <div>
-                <h2>AI Travel Assistant</h2>
-                <p>Online • Ready to help</p>
+                <h2>{labels.assistantTitleHead}</h2>
+                <p>{labels.assistantTextHead}</p>
               </div>
             </div>
             <button
-              onClick={clearChat}
+              onClick={() => {
+                clearChat(setMessages);
+              }}
               className="clear-chat-btn"
               title="Clear chat"
             >
@@ -282,7 +185,9 @@ const ChatAssistant = () => {
           <div className="chat-input-area">
             <div className="input-wrapper">
               <button
-                onClick={toggleVoiceInput}
+                onClick={() => {
+                  toggleVoiceInput(setIsListening, setInput);
+                }}
                 className={`voice-btn ${isListening ? "listening" : ""}`}
                 title={isListening ? "Listening..." : "Voice input"}
               >
@@ -297,12 +202,14 @@ const ChatAssistant = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask me anything about travel..."
+                placeholder={labels.inputPlaceholderText}
                 className="chat-input"
                 rows="1"
               />
               <button
-                onClick={sendMessage}
+                onClick={() => {
+                  sendMessage(input, setMessages, setInput, setLoading);
+                }}
                 disabled={!input.trim() || loading}
                 className="send-btn"
                 title="Send message"
@@ -310,9 +217,7 @@ const ChatAssistant = () => {
                 <Icons.FiSend size={18} />
               </button>
             </div>
-            <div className="input-hint">
-              Press Enter to send, Shift+Enter for new line
-            </div>
+            <div className="input-hint">{labels.inputHint}</div>
           </div>
         </div>
 
@@ -320,10 +225,10 @@ const ChatAssistant = () => {
         <div className="chat-sidebar">
           <div className="suggestions-card">
             <h3>
-              <Icons.FiHelpCircle size={18} /> Suggested Questions
+              <Icons.FiHelpCircle size={18} /> {labels.suggestedQuestionsTitle}
             </h3>
             <div className="suggestions-list">
-              {suggestedQuestions.map((question, idx) => (
+              {labels.suggestedQuestions.map((question, idx) => (
                 <button
                   key={idx}
                   onClick={() => setInput(question)}
@@ -336,14 +241,10 @@ const ChatAssistant = () => {
           </div>
 
           <div className="tips-card">
-            <h3>Quick Tips</h3>
+            <h3>{labels.quickTipsTitle}</h3>
             <ul className="tips-list">
-              <li>• Ask about specific destinations</li>
-              <li>• Request budget breakdowns</li>
-              <li>• Get local food recommendations</li>
-              <li>• Learn about hidden gems</li>
-              <li>• Check weather patterns</li>
-              <li>• Get packing suggestions</li>
+              {labels?.quickTips &&
+                labels.quickTips.map((tips, i) => <li key={i}>{tips}</li>)}
             </ul>
           </div>
         </div>

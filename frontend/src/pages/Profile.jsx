@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Icons from "../utils/icons/index"
+import Icons from "../utils/icons/index";
+import { formatINR } from "../hooks/currency";
 import { useAuth } from "../context/AuthContext";
 import { tripAPI, profileAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
@@ -42,13 +43,6 @@ const Profile = () => {
     fetchUserTrips();
     loadUserPreferences();
   }, []);
-
-  const formatINR = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      currency: "INR",
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
 
   const formatCurrency = (amount, currency = "INR") => {
     return new Intl.NumberFormat("en-IN", {
@@ -220,7 +214,7 @@ const Profile = () => {
     return `${score}%`;
   }
 
-  const recentTrips = trips.slice(0, 4);
+  const recentTrips = trips.slice(0, 3);
 
   const navigateToTrip = (tripId) => {
     window.location.href = `/trip/${tripId}`;
