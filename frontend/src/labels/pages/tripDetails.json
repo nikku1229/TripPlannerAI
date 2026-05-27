@@ -1,0 +1,17 @@
+{
+  "loadingBlockText": "Loading trip details...",
+  "backBtnText": "Back to Dashboard",
+  "exportBtnText": "Export",
+  "deleteTripBtnText": "Delete Trip",
+  "tripDetailTemperatureLabel": "Temperature",
+  "tripDetailHumidityLabel": "Humidity",
+  "tripDetailWindSpeedLabel": "Wind Speed",
+  "tripDetailConditionLabel": "Condition",
+  "travelItinerytitle": "Your Travel Itinerary",
+  "recommendedPlaceTitle": "Recommended Places",
+  "foodSuggestionsTitle": "Food Suggestions",
+  "travelTripsTitle": "💡 Travel Tips",
+  "budgetBreakdownTitle": "💰 Budget Breakdown",
+  "budgetBreakdownError": "Budget breakdown not available",
+  "mapShowError": "Map not available"
+}

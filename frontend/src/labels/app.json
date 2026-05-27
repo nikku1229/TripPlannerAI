@@ -1,4 +1,10 @@
 {
   "appName": "TripAI",
-  "footerText": "© 2026 TripAI. All rights reserved."
+  "footerText": "© 2026 TripAI. All rights reserved.",
+  "headerDashboardBtnText": "Dashboard",
+  "headerProfileBtnText": "Profile",
+  "headerLoginBtn": "Sign In",
+  "headerRegisterBtn": "Sign Up",
+  "logoutBtnText": "Logout",
+  "darkModeBtnText": "Dark Mode"
 }

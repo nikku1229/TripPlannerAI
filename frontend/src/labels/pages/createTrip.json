@@ -23,7 +23,7 @@
     "Art",
     "Photography"
   ],
-  "formField": {
+  "formFieldCreateTrip": {
     "destinationLabel": "Destination",
     "destinationInputPlaceholder": "e.g., Manali, Goa, Jaipur, Paris, Tokyo",
     "daysLabel": "Number of Days",

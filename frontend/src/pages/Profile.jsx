@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import ProfileInsights from "../components/ProfileInsights";
 import Icons from "../utils/icons/index";
 import { formatINR } from "../hooks/currency";
 import { useAuth } from "../context/AuthContext";
-import { tripAPI, profileAPI } from "../services/servicesApi";
-import toast from "react-hot-toast";
-import "../styles/pages/Profile.css";
+import {
+  fetchUserTrips,
+  handleUpdate,
+  loadUserPreferences,
+  handleSavePreferences,
+} from "../hooks/profileHook";
+import labels from "../labels/common";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -40,185 +45,9 @@ const Profile = () => {
   });
 
   useEffect(() => {
-    fetchUserTrips();
-    loadUserPreferences();
+    fetchUserTrips(setTrips, setStats);
+    loadUserPreferences(setPreferences);
   }, []);
-
-  const formatCurrency = (amount, currency = "INR") => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: currency,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
-
-  const fetchUserTrips = async () => {
-    try {
-      const response = await tripAPI.getAll();
-      setTrips(response.data);
-      calculateStats(response.data);
-    } catch (error) {
-      console.error("Error fetching trips:", error);
-      if (error.response?.status === 401) {
-        toast.error("Session expired. Please login again.");
-      }
-    }
-  };
-
-  const calculateStats = (tripsData) => {
-    const totalTrips = tripsData.length;
-    const totalBudget = tripsData.reduce(
-      (sum, trip) => sum + (trip.estimatedCost || trip.budget || 0),
-      0,
-    );
-    const totalDays = tripsData.reduce((sum, trip) => sum + trip.days, 0);
-    const uniqueDestinations = new Set(
-      tripsData.map((trip) => trip.destination),
-    ).size;
-
-    const destinationCount = tripsData.reduce((acc, trip) => {
-      acc[trip.destination] = (acc[trip.destination] || 0) + 1;
-      return acc;
-    }, {});
-
-    const favoriteDestination = Object.keys(destinationCount).reduce(
-      (a, b) => (destinationCount[a] > destinationCount[b] ? a : b),
-      "",
-    );
-
-    const averageBudgetPerDay = totalDays > 0 ? totalBudget / totalDays : 0;
-
-    setStats({
-      totalTrips,
-      totalBudget,
-      totalDays,
-      uniqueDestinations,
-      favoriteDestination: favoriteDestination || "N/A",
-      averageBudgetPerDay,
-    });
-  };
-
-  const handleUpdate = async () => {
-    setLoading(true);
-    try {
-      const response = await profileAPI.profileUpdate({
-        name: formData.name,
-        email: formData.email,
-        bio: formData.bio,
-        phone: formData.phone,
-        location: formData.location,
-      });
-
-      const updatedUser = response.data;
-      updateUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      toast.success("Profile updated successfully");
-      setIsEditing(false);
-    } catch (error) {
-      console.error("Update error:", error);
-      toast.error(error.response?.data?.message || "Failed to update profile");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadUserPreferences = async () => {
-    try {
-      const response = await profileAPI.getPreferences();
-      if (response.data) {
-        setPreferences((prev) => ({
-          ...prev,
-          ...response.data,
-        }));
-      }
-    } catch (error) {
-      console.error("Error loading preferences:", error);
-      if (error.response?.status === 401) {
-        toast.error("Please login to save preferences");
-      }
-    }
-  };
-
-  const handleSavePreferences = async () => {
-    setLoading(true);
-    try {
-      const response = await profileAPI.updatePreferences(preferences);
-
-      const updatedPrefs = response.data;
-      setPreferences(updatedPrefs);
-      toast.success("Preferences saved successfully");
-      setIsEditingPreferences(false);
-    } catch (error) {
-      console.error("Save preferences error:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to save preferences",
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const travelStats = [
-    {
-      label: "Total Trips",
-      value: stats.totalTrips,
-      icon: Icons.FiMapPin,
-      color: "#0d530e",
-    },
-    {
-      label: "Total Budget",
-      value: formatINR(stats.totalBudget),
-      icon: Icons.PiCurrencyInr,
-      color: "#0d530e",
-    },
-    {
-      label: "Days Traveled",
-      value: stats.totalDays,
-      icon: Icons.FiClock,
-      color: "#0d530e",
-    },
-    {
-      label: "Destinations",
-      value: stats.uniqueDestinations,
-      icon: Icons.FiGlobe,
-      color: "#0d530e",
-    },
-  ];
-
-  const achievementStats = [
-    {
-      label: "Favorite Destination",
-      value: stats.favoriteDestination,
-      icon: Icons.FiStar,
-      color: "#0d530e",
-    },
-    {
-      label: "Avg Budget/Day",
-      value: `₹${formatINR(stats.averageBudgetPerDay)}`,
-      icon: Icons.FiTrendingUp,
-      color: "#0d530e",
-    },
-    {
-      label: "Adventure Score",
-      value: "Explorer",
-      icon: Icons.FiAward,
-      color: "#0d530e",
-    },
-  ];
-
-  function getAdventureScore() {
-    const score = Math.min(
-      100,
-      Math.floor(stats.totalTrips * 10 + stats.uniqueDestinations * 5),
-    );
-    return `${score}%`;
-  }
-
-  const recentTrips = trips.slice(0, 3);
-
-  const navigateToTrip = (tripId) => {
-    window.location.href = `/trip/${tripId}`;
-  };
 
   return (
     <div className="profile-container">
@@ -247,7 +76,9 @@ const Profile = () => {
               <div className="edit-form-container">
                 <div className="edit-form-grid">
                   <div className="edit-field">
-                    <label>Full Name</label>
+                    <label>
+                      {labels.formFieldProfileDetails.fullNameLabel}
+                    </label>
                     <input
                       type="text"
                       value={formData.name}
@@ -258,7 +89,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="edit-field">
-                    <label>Email</label>
+                    <label>{labels.formFieldProfileDetails.emailLabel}</label>
                     <input
                       type="email"
                       value={formData.email}
@@ -269,7 +100,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="edit-field">
-                    <label>Phone</label>
+                    <label>{labels.formFieldProfileDetails.phoneLabel}</label>
                     <input
                       type="tel"
                       value={formData.phone}
@@ -281,7 +112,9 @@ const Profile = () => {
                     />
                   </div>
                   <div className="edit-field">
-                    <label>Location</label>
+                    <label>
+                      {labels.formFieldProfileDetails.locationLabel}
+                    </label>
                     <input
                       type="text"
                       value={formData.location}
@@ -293,7 +126,7 @@ const Profile = () => {
                     />
                   </div>
                   <div className="edit-field">
-                    <label>Bio</label>
+                    <label>{labels.formFieldProfileDetails.bioLabel}</label>
                     <textarea
                       value={formData.bio}
                       onChange={(e) =>
@@ -301,18 +134,29 @@ const Profile = () => {
                       }
                       className="edit-field-input edit-textarea"
                       rows="3"
-                      placeholder="Tell us about your travel style..."
+                      placeholder={
+                        labels.formFieldProfileDetails.bioPlaceholder
+                      }
                     />
                   </div>
                 </div>
                 <div className="edit-actions">
                   <button
-                    onClick={handleUpdate}
+                    onClick={() => {
+                      handleUpdate(
+                        setLoading,
+                        formData,
+                        updateUser,
+                        setIsEditing,
+                      );
+                    }}
                     disabled={loading}
                     className="save-profile-btn"
                   >
                     <Icons.FiSave size={16} />{" "}
-                    {loading ? "Saving..." : "Save Changes"}
+                    {loading
+                      ? labels.formFieldProfileDetails.loading.loading
+                      : labels.formFieldProfileDetails.loading.static}
                   </button>
                   <button
                     onClick={() => setIsEditing(false)}
@@ -326,8 +170,7 @@ const Profile = () => {
               <>
                 <h1 className="profile-name">{user?.name}</h1>
                 <p className="profile-bio">
-                  {user?.bio ||
-                    "Travel enthusiast exploring the world one destination at a time 🌍"}
+                  {user?.bio || labels.dummyBioText}
                 </p>
                 <div className="profile-info-grid">
                   <div className="profile-info-item">
@@ -364,98 +207,7 @@ const Profile = () => {
         </div>
       </motion.div>
 
-      {/* Stats Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="stats-cards-section"
-      >
-        <h2 className="section-title">Travel Statistics</h2>
-        <div className="stats-cards-grid">
-          {travelStats.map((stat, idx) => (
-            <div key={idx} className="stat-card">
-              <div
-                className="stat-icon"
-                style={{
-                  backgroundColor: `${stat.color}15`,
-                  color: stat.color,
-                }}
-              >
-                <stat.icon size={24} />
-              </div>
-              <div className="stat-content">
-                <span className="stat-label">{stat.label}</span>
-                <span className="stat-value">{stat.value}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Achievements Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className="achievements-section"
-      >
-        <h2 className="section-title">Achievements & Insights</h2>
-        <div className="achievements-grid">
-          {achievementStats.map((stat, idx) => (
-            <div key={idx} className="achievement-card">
-              <stat.icon size={28} color={stat.color} />
-              <div>
-                <p className="achievement-label">{stat.label}</p>
-                <p className="achievement-value">{stat.value}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Recent Trips Section */}
-      {recentTrips.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="recent-trips-section"
-        >
-          <h2 className="section-title">Recent Adventures</h2>
-          <div className="recent-trips-grid">
-            {recentTrips.map((trip) => (
-              <div
-                key={trip._id}
-                className="recent-trip-card"
-                onClick={() => navigateToTrip(trip._id)}
-              >
-                <div className="trip-card-header">
-                  <div className="trip-destination-icon">
-                    {trip.destination?.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <h3>{trip.destination}</h3>
-                    <p>
-                      {trip.days} days • {"₹"}
-                      {formatINR(trip.estimatedCost || trip.budget)}
-                    </p>
-                  </div>
-                </div>
-                {trip.interests && (
-                  <div className="trip-interests">
-                    {trip.interests.slice(0, 3).map((interest, idx) => (
-                      <span key={idx} className="interest-chip">
-                        {interest}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <ProfileInsights stats={stats} trips={trips} />
 
       {/* Preferences Section */}
       <motion.div
@@ -465,7 +217,9 @@ const Profile = () => {
         className="preferences-section"
       >
         <div className="preferences-header">
-          <h2 className="section-title">Travel Preferences</h2>
+          <h2 className="section-title">
+            {labels.profileTravelPreferenceTitle}
+          </h2>
           {!isEditingPreferences && (
             <button
               onClick={() => setIsEditingPreferences(true)}
@@ -480,7 +234,7 @@ const Profile = () => {
           <div className="preferences-edit-form">
             <div className="preferences-grid">
               <div className="preference-item">
-                <label>Travel Style</label>
+                <label>{labels.preferenceForm.travelStyleLabel}</label>
                 <select
                   value={preferences.travelStyle}
                   onChange={(e) =>
@@ -491,14 +245,18 @@ const Profile = () => {
                   }
                   className="preference-select"
                 >
-                  <option value="budget">Budget Traveler</option>
-                  <option value="moderate">Moderate Traveler</option>
-                  <option value="luxury">Luxury Traveler</option>
+                  {labels?.preferenceForm?.travelStylesOptions?.map(
+                    (option, idx) => (
+                      <option key={idx} value={option.value}>
+                        {option.text}
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
 
               <div className="preference-item">
-                <label>Favorite Destinations</label>
+                <label>{labels.preferenceForm.favoriteDestinationLabel}</label>
                 <input
                   type="text"
                   value={preferences.favoriteDestinations}
@@ -508,13 +266,15 @@ const Profile = () => {
                       favoriteDestinations: e.target.value,
                     })
                   }
-                  placeholder="e.g., Paris, Tokyo, Bali"
+                  placeholder={
+                    labels.preferenceForm.favoriteDestinationPlaceholder
+                  }
                   className="preference-input"
                 />
               </div>
 
               <div className="preference-item">
-                <label>Email Notifications</label>
+                <label>{labels.preferenceForm.emailNotificationLabel}</label>
                 <div className="checkbox-wrapper">
                   <input
                     type="checkbox"
@@ -528,13 +288,13 @@ const Profile = () => {
                     }
                   />
                   <label htmlFor="notifications">
-                    Receive travel deals and tips
+                    {labels.preferenceForm.emailNotificationCheckboxLabel}
                   </label>
                 </div>
               </div>
 
               <div className="preference-item">
-                <label>Currency</label>
+                <label>{labels.preferenceForm.currencyLabel}</label>
                 <select
                   value={preferences.currency}
                   onChange={(e) =>
@@ -542,16 +302,18 @@ const Profile = () => {
                   }
                   className="preference-select"
                 >
-                  <option value="INR">Indian Rupee (₹)</option>
-                  <option value="USD">US Dollar ($)</option>
-                  <option value="EUR">Euro (€)</option>
-                  <option value="GBP">British Pound (£)</option>
-                  <option value="JPY">Japanese Yen (¥)</option>
+                  {labels?.preferenceForm?.currencyTypeOptions?.map(
+                    (option, idx) => (
+                      <option key={idx} value={option.value}>
+                        {option.text}
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
 
               <div className="preference-item">
-                <label>Language</label>
+                <label>{labels.preferenceForm.languageLabel}</label>
                 <select
                   value={preferences.language}
                   onChange={(e) =>
@@ -559,15 +321,18 @@ const Profile = () => {
                   }
                   className="preference-select"
                 >
-                  <option value="en">English</option>
-                  <option value="hi">Hindi</option>
-                  <option value="es">Spanish</option>
-                  <option value="fr">French</option>
+                  {labels?.preferenceForm?.languageTypeOptions.map(
+                    (option, idx) => (
+                      <option key={idx} value={option.value}>
+                        {option.text}
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
 
               <div className="preference-item">
-                <label>Budget Range</label>
+                <label>{labels.preferenceForm.budgetRangeLabel}</label>
                 <select
                   value={preferences.budgetRange}
                   onChange={(e) =>
@@ -578,21 +343,34 @@ const Profile = () => {
                   }
                   className="preference-select"
                 >
-                  <option value="budget">Budget (10k-30k per trip)</option>
-                  <option value="moderate">Moderate (30k-1L per trip)</option>
-                  <option value="luxury">Luxury (1L+ per trip)</option>
+                  {labels?.preferenceForm?.budgetRangeOptions.map(
+                    (option, idx) => (
+                      <option key={idx} value={option.value}>
+                        {option.text}
+                      </option>
+                    ),
+                  )}
                 </select>
               </div>
             </div>
 
             <div className="preferences-actions">
               <button
-                onClick={handleSavePreferences}
+                onClick={() => {
+                  handleSavePreferences(
+                    preferences,
+                    setLoading,
+                    setPreferences,
+                    setIsEditingPreferences,
+                  );
+                }}
                 disabled={loading}
                 className="save-preferences-btn"
               >
                 <Icons.FiSave size={16} />{" "}
-                {loading ? "Saving..." : "Save Preferences"}
+                {loading
+                  ? labels.preferenceForm.loading.loading
+                  : labels.preferenceForm.loading.static}
               </button>
               <button
                 onClick={() => setIsEditingPreferences(false)}
@@ -606,29 +384,39 @@ const Profile = () => {
           <div className="preferences-display">
             <div className="preferences-grid-display">
               <div className="pref-display-item">
-                <span className="pref-label">Travel Style</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.travelStyleLabel}
+                </span>
                 <span className="pref-value capitalize">
                   {preferences.travelStyle}
                 </span>
               </div>
               <div className="pref-display-item">
-                <span className="pref-label">Favorite Destinations</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.favoriteDestinationLabel}
+                </span>
                 <span className="pref-value">
                   {preferences.favoriteDestinations || "Not specified"}
                 </span>
               </div>
               <div className="pref-display-item">
-                <span className="pref-label">Email Notifications</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.emailNotificationLabel}
+                </span>
                 <span className="pref-value">
                   {preferences.emailNotifications ? "Enabled" : "Disabled"}
                 </span>
               </div>
               <div className="pref-display-item">
-                <span className="pref-label">Currency</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.currencyLabel}
+                </span>
                 <span className="pref-value">{preferences.currency}</span>
               </div>
               <div className="pref-display-item">
-                <span className="pref-label">Language</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.languageLabel}
+                </span>
                 <span className="pref-value">
                   {preferences.language === "en"
                     ? "English"
@@ -636,7 +424,9 @@ const Profile = () => {
                 </span>
               </div>
               <div className="pref-display-item">
-                <span className="pref-label">Budget Range</span>
+                <span className="pref-label">
+                  {labels.preferenceForm.budgetRangeLabel}
+                </span>
                 <span className="pref-value capitalize">
                   {preferences.budgetRange}
                 </span>

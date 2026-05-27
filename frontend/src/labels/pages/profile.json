@@ -1,0 +1,101 @@
+{
+  "formFieldProfileDetails": {
+    "fullNameLabel": "Full Name",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "locationLabel": "Location",
+    "bioLabel": "Bio",
+    "bioPlaceholder": "Tell us about your travel style...",
+    "loading": {
+      "static": "Save Changes",
+      "loading": "Saving..."
+    }
+  },
+  "dummyBioText": "Travel enthusiast exploring the world one destination at a time 🌍",
+  "travelStatisticsTitle": "Travel Statistics",
+  "achievementInsightsTitle": "Achievements & Insights",
+  "profileRecentTravelTitle": "Recent Adventures",
+  "profileTravelPreferenceTitle": "Travel Preferences",
+  "preferenceForm": {
+    "travelStyleLabel": "Travel Style",
+    "favoriteDestinationLabel": "Favorite Destinations",
+    "favoriteDestinationPlaceholder": "e.g., Paris, Tokyo, Bali",
+    "emailNotificationLabel": "Email Notifications",
+    "emailNotificationCheckboxLabel": "Receive travel deals and tips",
+    "currencyLabel": "Currency",
+    "languageLabel": "Language",
+    "budgetRangeLabel": "Budget Range",
+    "loading": {
+      "static": "Save Preferences",
+      "loading": "Saving..."
+    },
+    "travelStylesOptions": [
+      {
+        "value": "budget",
+        "text": "Budget Traveler"
+      },
+      {
+        "value": "moderate",
+        "text": "Moderate Traveler"
+      },
+      {
+        "value": "luxury",
+        "text": "Luxury Traveler"
+      }
+    ],
+    "currencyTypeOptions": [
+      {
+        "value": "INR",
+        "text": "Indian Rupee (₹)"
+      },
+      {
+        "value": "USD",
+        "text": "US Dollar ($)"
+      },
+      {
+        "value": "EUR",
+        "text": "Euro (€)"
+      },
+      {
+        "value": "GBP",
+        "text": "British Pound (£)"
+      },
+      {
+        "value": "JPY",
+        "text": "Japanese Yen (¥)"
+      }
+    ],
+    "languageTypeOptions": [
+      {
+        "value": "en",
+        "text": "English"
+      },
+      {
+        "value": "hi",
+        "text": "Hindi"
+      },
+      {
+        "value": "es",
+        "text": "Spanish"
+      },
+      {
+        "value": "fr",
+        "text": "French"
+      }
+    ],
+    "budgetRangeOptions": [
+      {
+        "value": "budget",
+        "text": "Budget (10k-30k per trip)"
+      },
+      {
+        "value": "moderate",
+        "text": "Moderate (30k-1L per trip)"
+      },
+      {
+        "value": "luxury",
+        "text": "Luxury (1L+ per trip)"
+      }
+    ]
+  }
+}

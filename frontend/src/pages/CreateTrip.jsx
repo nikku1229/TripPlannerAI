@@ -40,7 +40,7 @@ const CreateTrip = () => {
         >
           <div className="form-group">
             <label>
-              <Icons.FiMapPin /> {labels.formField.destinationLabel}
+              <Icons.FiMapPin /> {labels.formFieldCreateTrip.destinationLabel}
             </label>
             <input
               type="text"
@@ -48,7 +48,9 @@ const CreateTrip = () => {
               onChange={(e) =>
                 setFormData({ ...formData, destination: e.target.value })
               }
-              placeholder={labels.formField.destinationInputPlaceholder}
+              placeholder={
+                labels.formFieldCreateTrip.destinationInputPlaceholder
+              }
               required
             />
           </div>
@@ -56,7 +58,7 @@ const CreateTrip = () => {
           <div className="form-row">
             <div className="form-group">
               <label>
-                <Icons.FiCalendar /> {labels.formField.daysLabel}
+                <Icons.FiCalendar /> {labels.formFieldCreateTrip.daysLabel}
               </label>
               <input
                 type="number"
@@ -72,7 +74,7 @@ const CreateTrip = () => {
 
             <div className="form-group">
               <label>
-                <Icons.PiCurrencyInr /> {labels.formField.budgetLabel}
+                <Icons.PiCurrencyInr /> {labels.formFieldCreateTrip.budgetLabel}
               </label>
               <input
                 type="number"
@@ -92,7 +94,7 @@ const CreateTrip = () => {
 
           <div className="budget-range">
             <div className="budget-range-label">
-              <span>{labels.formField.budgetRangeLabel}</span>
+              <span>{labels.formFieldCreateTrip.budgetRangeLabel}</span>
             </div>
             <div className="budget-bar">
               <div
@@ -103,14 +105,18 @@ const CreateTrip = () => {
               ></div>
             </div>
             <div className="budget-range-label" style={{ marginTop: "6px" }}>
-              <span>{labels.formField.budgetRangeMinMax.budgetMinRange}</span>
-              <span>{labels.formField.budgetRangeMinMax.budgetMaxRange}</span>
+              <span>
+                {labels.formFieldCreateTrip.budgetRangeMinMax.budgetMinRange}
+              </span>
+              <span>
+                {labels.formFieldCreateTrip.budgetRangeMinMax.budgetMaxRange}
+              </span>
             </div>
           </div>
 
           <div className="form-group">
             <label>
-              <Icons.FiCompass /> {labels.formField.travelStyleLabel}
+              <Icons.FiCompass /> {labels.formFieldCreateTrip.travelStyleLabel}
             </label>
             <div className="styles-grid">
               {labels?.travelStyles &&
@@ -135,7 +141,7 @@ const CreateTrip = () => {
 
           <div className="form-group">
             <label>
-              <Icons.FiHeart /> {labels.formField.interestLabel}
+              <Icons.FiHeart /> {labels.formFieldCreateTrip.interestLabel}
             </label>
             <div className="interests-grid">
               {labels?.interestOptions &&
