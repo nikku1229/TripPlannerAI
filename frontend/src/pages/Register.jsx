@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
+import labels from "../labels/common";
 import Icons from "../utils/icons/index";
 import "../styles/pages/Register.css";
 
@@ -63,14 +64,14 @@ const Register = () => {
         className="register-card"
       >
         <div className="register-header">
-          <h2 className="gradient-text">Create Account</h2>
-          <p>Start your journey with us</p>
+          <h2 className="gradient-text">{labels.registerTitleHead}</h2>
+          <p>{labels.registerTextHead}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="register-form">
           <div className="form-group">
             <label>
-              <Icons.FiUser size={16} /> Full Name
+              <Icons.FiUser size={16} /> {labels.formFieldLoginRegister.fullNameLabel}
             </label>
             <div className="input-wrapper">
               <input
@@ -78,7 +79,7 @@ const Register = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Enter your name"
+                placeholder={labels.formFieldLoginRegister.fullNamePlaceholder}
                 required
               />
             </div>
@@ -86,7 +87,7 @@ const Register = () => {
 
           <div className="form-group">
             <label>
-              <Icons.FiMail size={16} /> Email
+              <Icons.FiMail size={16} /> {labels.formFieldLoginRegister.emailLabel}
             </label>
             <div className="input-wrapper">
               <input
@@ -94,7 +95,7 @@ const Register = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder={labels.formFieldLoginRegister.emailPlaceholder}
                 required
               />
             </div>
@@ -102,7 +103,7 @@ const Register = () => {
 
           <div className="form-group">
             <label>
-              <Icons.FiLock size={16} /> Password
+              <Icons.FiLock size={16} /> {labels.formFieldLoginRegister.passwordLabel}
             </label>
             <div className="input-wrapper">
               <input
@@ -110,7 +111,7 @@ const Register = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                placeholder="Create a password"
+                placeholder={labels.formFieldLoginRegister.createPasswordPlaceholder}
                 required
               />
               <button
@@ -118,14 +119,18 @@ const Register = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 className="password-toggle"
               >
-                {showPassword ? <Icons.FiEyeOff size={18} /> : <Icons.FiEye size={18} />}
+                {showPassword ? (
+                  <Icons.FiEyeOff size={18} />
+                ) : (
+                  <Icons.FiEye size={18} />
+                )}
               </button>
             </div>
           </div>
 
           <div className="form-group">
             <label>
-              <Icons.FiLock size={16} /> Confirm Password
+              <Icons.FiLock size={16} /> {labels.formFieldLoginRegister.confirmPasswordLabel}
             </label>
             <div className="input-wrapper">
               <input
@@ -133,7 +138,7 @@ const Register = () => {
                 name="confirmPassword"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                placeholder="Confirm your password"
+                placeholder={labels.formFieldLoginRegister.confirmPasswordPlaceholder}
                 required
               />
               <button
@@ -149,7 +154,7 @@ const Register = () => {
               </button>
             </div>
             {!passwordMatch && (
-              <p className="error-message">Passwords do not match</p>
+              <p className="error-message">{labels.passwordError}</p>
             )}
           </div>
 
@@ -158,18 +163,19 @@ const Register = () => {
             disabled={loading || !passwordMatch}
             className="register-btn"
           >
-            {loading ? "Creating Account..." : "Sign Up"}
+            {loading
+              ? labels.loadingRegister.loading
+              : labels.loadingRegister.static}
           </button>
         </form>
 
         <p className="login-link">
-          Already have an account? <Link to="/login">Sign in</Link>
+          {labels.registerPageSignInText}{" "}
+          <Link to="/login">{labels.loadingLogin.static}</Link>
         </p>
 
         <div className="terms-text">
-          <p>
-            By signing up, you agree to our Terms of Service and Privacy Policy
-          </p>
+          <p>{labels.termConditionText}</p>
         </div>
       </motion.div>
     </div>

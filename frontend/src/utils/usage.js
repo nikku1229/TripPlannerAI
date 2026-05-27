@@ -55,3 +55,7 @@ export const COLORS = [
   "#388e3c",
   "#43a047",
 ];
+
+export const navigateToTrip = (tripId) => {
+  window.location.href = `/trip/${tripId}`;
+};

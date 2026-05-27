@@ -1,74 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
+import { motion } from "framer-motion";
+import {
+  fetchTripDetails,
+  getNormalizedBudget,
+  handleDelete,
+  handleExport,
+} from "../hooks/tripDetailsHook";
 import Icons from "../utils/icons/index";
 import { formatINR } from "../hooks/currency";
-import { tripAPI, weatherAPI } from "../services/servicesApi";
-import toast from "react-hot-toast";
-import "../styles/pages/TripDetails.css";
-
-// Fix for default marker icons in Leaflet
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-});
-
-// Enhanced geocoding function
-const getCoordinates = async (destination) => {
-  const commonCoordinates = {
-    paris: [48.8566, 2.3522],
-    london: [51.5074, -0.1278],
-    "new york": [40.7128, -74.006],
-    tokyo: [35.6762, 139.6503],
-    dubai: [25.2048, 55.2708],
-    singapore: [1.3521, 103.8198],
-    bangkok: [13.7367, 100.5231],
-    mumbai: [19.076, 72.8777],
-    delhi: [28.6139, 77.209],
-    goa: [15.2993, 74.124],
-    jaipur: [26.9124, 75.7873],
-    manali: [32.2432, 77.1892],
-    kerala: [10.1632, 76.6413],
-    chennai: [13.0827, 80.2707],
-    bangalore: [12.9716, 77.5946],
-    hyderabad: [17.385, 78.4867],
-    kolkata: [22.5726, 88.3639],
-    udaipur: [24.5854, 73.7125],
-    shimla: [31.1048, 77.1734],
-    rishikesh: [30.0869, 78.2676],
-  };
-
-  const key = destination?.toLowerCase();
-  if (commonCoordinates[key]) {
-    return commonCoordinates[key];
-  }
-
-  try {
-    const response = await fetch(
-      `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(destination)}&format=json&limit=1`,
-      {
-        headers: {
-          Accept: "application/json",
-          "User-Agent": "TripAI-App/1.0",
-        },
-      },
-    );
-    const data = await response.json();
-    if (data && data.length > 0) {
-      return [parseFloat(data[0].lat), parseFloat(data[0].lon)];
-    }
-  } catch (error) {
-    console.error("Geocoding error:", error);
-  }
-  return [20.5937, 78.9629];
-};
+import labels from "../labels/common";
 
 const TripDetails = () => {
   const { id } = useParams();
@@ -80,62 +22,21 @@ const TripDetails = () => {
   const [mapCoordinates, setMapCoordinates] = useState([20.5937, 78.9629]);
 
   useEffect(() => {
-    fetchTripDetails();
+    fetchTripDetails(
+      id,
+      setTrip,
+      setWeather,
+      setMapCoordinates,
+      navigate,
+      setLoading,
+    );
   }, [id]);
-
-  const fetchTripDetails = async () => {
-    try {
-      const response = await tripAPI.getById(id);
-      setTrip(response.data);
-      fetchWeather(response.data.destination);
-      const coords = await getCoordinates(response.data.destination);
-      setMapCoordinates(coords);
-    } catch (error) {
-      toast.error("Failed to load trip details");
-      navigate("/dashboard");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchWeather = async (city) => {
-    try {
-      const response = await weatherAPI.getWeather(city);
-      setWeather(response.data);
-    } catch (error) {
-      console.error("Weather fetch error:", error);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete this trip?")) {
-      try {
-        await tripAPI.delete(id);
-        toast.success("Trip deleted successfully");
-        navigate("/dashboard");
-      } catch (error) {
-        toast.error("Failed to delete trip");
-      }
-    }
-  };
-
-  const handleExport = () => {
-    const tripData = JSON.stringify(trip, null, 2);
-    const blob = new Blob([tripData], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `trip-${trip.destination}-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("Trip exported successfully");
-  };
 
   if (loading) {
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
-        <p>Loading trip details...</p>
+        <p>{labels.loadingBlockText}</p>
       </div>
     );
   }
@@ -145,42 +46,7 @@ const TripDetails = () => {
   const itinerary = trip.itinerary;
   const dailyItinerary = itinerary?.dailyItinerary || [];
 
-  const getNormalizedBudget = () => {
-    const estimatedBudget = itinerary?.estimatedBudget;
-    const actualBudget = trip.estimatedCost || trip.budget;
-
-    if (!estimatedBudget || !actualBudget) return null;
-
-    const estimatedTotal =
-      estimatedBudget.total ||
-      estimatedBudget.accommodation +
-        estimatedBudget.food +
-        estimatedBudget.activities +
-        estimatedBudget.transport;
-
-    if (estimatedTotal === 0) return null;
-
-    const ratio = actualBudget / estimatedTotal;
-
-    let accommodation = Math.round(estimatedBudget.accommodation * ratio);
-    let food = Math.round(estimatedBudget.food * ratio);
-    let activities = Math.round(estimatedBudget.activities * ratio);
-    let transport = Math.round(estimatedBudget.transport * ratio);
-
-    const sum = accommodation + food + activities + transport;
-    const diff = actualBudget - sum;
-    accommodation += diff;
-
-    return {
-      accommodation,
-      food,
-      activities,
-      transport,
-      total: actualBudget,
-    };
-  };
-
-  const normalizedBudget = getNormalizedBudget();
+  const normalizedBudget = getNormalizedBudget(trip);
 
   return (
     <div className="trip-details-container">
@@ -190,7 +56,7 @@ const TripDetails = () => {
         className="trip-header"
       >
         <button onClick={() => navigate("/dashboard")} className="back-btn">
-          <Icons.FiArrowLeft size={18} /> Back to Dashboard
+          <Icons.FiArrowLeft size={18} /> {labels.backBtnText}
         </button>
 
         <div className="trip-header-main">
@@ -212,16 +78,20 @@ const TripDetails = () => {
 
           <div className="trip-actions">
             <button
-              onClick={handleExport}
+              onClick={() => {
+                handleExport(trip);
+              }}
               className="action-btn trip-export-btn"
             >
-              <Icons.FiDownload size={16} /> Export
+              <Icons.FiDownload size={16} /> {labels.exportBtnText}
             </button>
             <button
-              onClick={handleDelete}
+              onClick={() => {
+                handleDelete(id, navigate);
+              }}
               className="action-btn trip-delete-btn"
             >
-              <Icons.FiTrash2 size={16} /> Delete Trip
+              <Icons.FiTrash2 size={16} /> {labels.deleteTripBtnText}
             </button>
           </div>
         </div>
@@ -243,21 +113,29 @@ const TripDetails = () => {
               <div className="weather-value">
                 {Math.round(weather.temperature)}°C
               </div>
-              <div className="weather-label">Temperature</div>
+              <div className="weather-label">
+                {labels.tripDetailTemperatureLabel}
+              </div>
             </div>
             <div className="weather-item">
               <div className="weather-value">{weather.humidity}%</div>
-              <div className="weather-label">Humidity</div>
+              <div className="weather-label">
+                {labels.tripDetailHumidityLabel}
+              </div>
             </div>
             <div className="weather-item">
               <div className="weather-value">{weather.windSpeed} km/h</div>
-              <div className="weather-label">Wind Speed</div>
+              <div className="weather-label">
+                {labels.tripDetailWindSpeedLabel}
+              </div>
             </div>
             <div className="weather-item">
               <div className="weather-value capitalize">
                 {weather.condition}
               </div>
-              <div className="weather-label">Condition</div>
+              <div className="weather-label">
+                {labels.tripDetailConditionLabel}
+              </div>
             </div>
           </div>
         </motion.div>
@@ -270,7 +148,7 @@ const TripDetails = () => {
         transition={{ delay: 0.2 }}
         className="itinerary-card"
       >
-        <h2 className="section-title">Your Travel Itinerary</h2>
+        <h2 className="section-title">{labels.travelItinerytitle}</h2>
         <div className="itinerary-list">
           {dailyItinerary.map((day, idx) => (
             <div key={idx} className="itinerary-day">
@@ -333,7 +211,7 @@ const TripDetails = () => {
           className="recommendation-card"
         >
           <h3>
-            <Icons.FiCamera size={18} /> Recommended Places
+            <Icons.FiCamera size={18} /> {labels.recommendedPlaceTitle}
           </h3>
           <ul>
             {itinerary?.recommendedPlaces?.map((place, idx) => (
@@ -352,7 +230,7 @@ const TripDetails = () => {
           className="recommendation-card"
         >
           <h3>
-            <Icons.FiCoffee size={18} /> Food Suggestions
+            <Icons.FiCoffee size={18} /> {labels.foodSuggestionsTitle}
           </h3>
           <ul>
             {itinerary?.foodSuggestions?.map((food, idx) => (
@@ -373,7 +251,7 @@ const TripDetails = () => {
           transition={{ delay: 0.4 }}
           className="tips-card"
         >
-          <h3>💡 Travel Tips</h3>
+          <h3>{labels.travelTripsTitle}</h3>
           <ul>
             {itinerary?.travelTips?.map((tip, idx) => (
               <li key={idx}>
@@ -390,7 +268,7 @@ const TripDetails = () => {
           transition={{ delay: 0.4 }}
           className="budget-card"
         >
-          <h3>💰 Budget Breakdown</h3>
+          <h3>{labels.budgetBreakdownTitle}</h3>
           {normalizedBudget ? (
             <div className="budget-list">
               <div className="budget-item">
@@ -423,7 +301,7 @@ const TripDetails = () => {
               </div>
             </div>
           ) : (
-            <p className="no-data">Budget breakdown not available</p>
+            <p className="no-data">{labels.budgetBreakdownError}</p>
           )}
         </motion.div>
       </div>

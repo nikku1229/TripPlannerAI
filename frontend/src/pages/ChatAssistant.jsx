@@ -5,7 +5,6 @@ import { copyMessage, clearChat } from "../utils/usage";
 import { sendMessage, toggleVoiceInput } from "../hooks/chatAssistantHook";
 import labels from "../labels/common";
 import toast from "react-hot-toast";
-import "../styles/pages/ChatAssistant.css";
 
 const ChatAssistant = () => {
   const [messages, setMessages] = useState([

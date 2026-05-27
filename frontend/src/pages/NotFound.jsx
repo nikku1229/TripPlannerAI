@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Icons from "../utils/icons/index";
-import "../styles/pages/NotFound.css";
 
 const NotFound = () => {
   return (
