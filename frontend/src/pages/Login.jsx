@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
+import labels from "../labels/common";
 import Icons from "../utils/icons/index";
-import "../styles/pages/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -32,21 +32,21 @@ const Login = () => {
         className="login-card"
       >
         <div className="login-header">
-          <h2 className="gradient-text">Welcome Back</h2>
-          <p>Sign in to continue your journey</p>
+          <h2 className="gradient-text">{labels.loginTitleHead}</h2>
+          <p>{labels.loginTextHead}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label>
-              <Icons.FiMail size={16} /> Email
+              <Icons.FiMail size={16} /> {labels.formFieldLoginRegister.emailLabel}
             </label>
             <div className="input-wrapper">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
+                placeholder={labels.formFieldLoginRegister.emailPlaceholder}
                 required
               />
             </div>
@@ -54,14 +54,14 @@ const Login = () => {
 
           <div className="form-group">
             <label>
-              <Icons.FiLock size={16} /> Password
+              <Icons.FiLock size={16} /> {labels.formFieldLoginRegister.passwordLabel}
             </label>
             <div className="input-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
+                placeholder={labels.formFieldLoginRegister.passwordPlaceholder}
                 required
               />
               <button
@@ -79,16 +79,19 @@ const Login = () => {
           </div>
 
           <div className="forgot-password">
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <Link to="/forgot-password">
+              {labels.formFieldLoginRegister.forgetPasswordText}
+            </Link>
           </div>
 
           <button type="submit" disabled={loading} className="login-btn">
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? labels.loadingLogin.loading : labels.loadingLogin.static}
           </button>
         </form>
 
         <p className="signup-link">
-          Don't have an account? <Link to="/register">Sign up</Link>
+          {labels.loginPageSignUpText}{" "}
+          <Link to="/register">{labels.loadingRegister.static}</Link>
         </p>
       </motion.div>
     </div>

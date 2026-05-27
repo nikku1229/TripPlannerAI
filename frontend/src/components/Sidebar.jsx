@@ -3,8 +3,8 @@ import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Icons from "../utils/icons/index";
 import { useAuth } from "../context/AuthContext";
+import labels from "../labels/common";
 import Logo from "../assets/Logo/Logo.png";
-import "../styles/components/Sidebar.css";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
@@ -73,7 +73,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               >
                 <div className="mobile-sidebar-header">
                   <div className="sidebar-logo">
-                    <Link to="/">TripAI</Link>
+                    <Link to="/">{labels.appName}</Link>
                   </div>
                   <button onClick={closeMobileMenu} className="close-btn">
                     <Icons.FiX size={24} />
@@ -95,13 +95,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   ))}
                   <button onClick={logout} className="sidebar-link logout">
                     <Icons.FiLogOut size={20} />
-                    <span>Logout</span>
+                    <span>{labels.logoutBtnText}</span>
                   </button>
                 </nav>
                 <div className="mobile-sidebar-footer">
                   <button onClick={toggleDarkMode} className="theme-toggle">
                     <Icons.FiMoon size={20} />
-                    <span>Dark Mode</span>
+                    <span>{labels.darkModeBtnText}</span>
                   </button>
                 </div>
               </motion.aside>
@@ -127,7 +127,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               exit={{ opacity: 0 }}
               className="sidebar-logo"
             >
-              <Link to="/">TripAI</Link>
+              <Link to="/">{labels.appName}</Link>
             </motion.div>
           ) : (
             <motion.div
@@ -137,7 +137,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               className="sidebar-logo-icon"
             >
               <Link to="/">
-                <img src={Logo} alt="TripAI" />
+                <img src={Logo} alt={labels.appName} />
               </Link>
             </motion.div>
           )}
@@ -178,7 +178,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 display: isOpen ? "inline" : "none",
               }}
             >
-              Logout
+              {labels.logoutBtnText}
             </motion.span>
           </button>
         </nav>
@@ -192,7 +192,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 display: isOpen ? "inline" : "none",
               }}
             >
-              Dark Mode
+              {labels.darkModeBtnText}
             </motion.span>
           </button>
         </div>

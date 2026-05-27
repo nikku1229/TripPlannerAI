@@ -1,0 +1,31 @@
+{
+  "loginTitleHead": "Welcome Back",
+  "loginTextHead": "Sign in to continue your journey",
+  "registerTitleHead": "Create Account",
+  "registerTextHead": "Start your journey with us",
+
+  "formFieldLoginRegister": {
+    "fullNameLabel": "Full Name",
+    "fullNamePlaceholder": "Enter your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "createPasswordPlaceholder": "Create a password",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "forgetPasswordText": "Forgot Password?"
+  },
+  "loadingLogin": {
+    "static": "Sign In",
+    "loading": "Signing in..."
+  },
+  "loadingRegister": {
+    "static": "Sign Up",
+    "loading": "Creating Account..."
+  },
+  "loginPageSignUpText": "Don't have an account? ",
+  "registerPageSignInText": "Already have an account?",
+  "passwordError": "Passwords do not match",
+  "termConditionText": "By signing up, you agree to our Terms of Service and Privacy Policy"
+}
