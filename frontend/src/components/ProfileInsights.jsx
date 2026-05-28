@@ -11,25 +11,21 @@ function ProfileInsights({ stats, trips }) {
       label: "Total Trips",
       value: stats.totalTrips,
       icon: Icons.FiMapPin,
-      color: "#0d530e",
     },
     {
       label: "Total Budget",
       value: formatINR(stats.totalBudget),
       icon: Icons.PiCurrencyInr,
-      color: "#0d530e",
     },
     {
       label: "Days Traveled",
       value: stats.totalDays,
       icon: Icons.FiClock,
-      color: "#0d530e",
     },
     {
       label: "Destinations",
       value: stats.uniqueDestinations,
       icon: Icons.FiGlobe,
-      color: "#0d530e",
     },
   ];
 
@@ -38,19 +34,16 @@ function ProfileInsights({ stats, trips }) {
       label: "Favorite Destination",
       value: stats.favoriteDestination,
       icon: Icons.FiStar,
-      color: "#0d530e",
     },
     {
       label: "Avg Budget/Day",
       value: `₹${formatINR(stats.averageBudgetPerDay)}`,
       icon: Icons.FiTrendingUp,
-      color: "#0d530e",
     },
     {
       label: "Adventure Score",
       value: "Explorer",
       icon: Icons.FiAward,
-      color: "#0d530e",
     },
   ];
 
@@ -68,13 +61,7 @@ function ProfileInsights({ stats, trips }) {
         <div className="stats-cards-grid">
           {travelStats.map((stat, idx) => (
             <div key={idx} className="stat-card">
-              <div
-                className="stat-icon"
-                style={{
-                  backgroundColor: `${stat.color}15`,
-                  color: stat.color,
-                }}
-              >
+              <div className="stat-icon">
                 <stat.icon size={24} />
               </div>
               <div className="stat-content">
@@ -97,7 +84,7 @@ function ProfileInsights({ stats, trips }) {
         <div className="achievements-grid">
           {achievementStats.map((stat, idx) => (
             <div key={idx} className="achievement-card">
-              <stat.icon size={28} color={stat.color} />
+              <stat.icon size={24}/>
               <div>
                 <p className="achievement-label">{stat.label}</p>
                 <p className="achievement-value">{stat.value}</p>

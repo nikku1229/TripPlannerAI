@@ -4,9 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg,
-      var(--white) 0%,
-      var(--primary-color) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--white) 0%,
+    var(--primary-color) 100%
+  );
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -33,7 +35,6 @@
 }
 
 @keyframes floatRegister {
-
   0%,
   100% {
     transform: translate(0, 0) rotate(0deg);
@@ -45,7 +46,7 @@
 }
 
 .register-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--white);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 32px;
@@ -107,25 +108,25 @@
   width: 100%;
 }
 
-.input-wrapper input {
+.register-form .input-wrapper input {
   width: 100%;
-  border: 2px solid rgba(13, 83, 14, 0.2);
+  border: 2px solid var(--black-70);
   border-radius: 16px;
   font-size: 15px;
   transition: all 0.3s ease;
   background: var(--white);
   color: var(--black);
   font-family: inherit;
+
+  &::placeholder {
+    color: var(--gray-70);
+  }
 }
 
 .input-wrapper input:focus {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(13, 83, 14, 0.1);
-}
-
-.input-wrapper input::placeholder {
-  color: rgba(68, 68, 68, 0.5);
 }
 
 .password-toggle {
@@ -157,7 +158,6 @@
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);

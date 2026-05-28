@@ -19,12 +19,6 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 function App() {
-  useEffect(() => {
-    const isDark = localStorage.getItem("darkMode") === "true";
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
 
   return (
     <Router

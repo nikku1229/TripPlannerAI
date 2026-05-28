@@ -1,8 +1,10 @@
 .home-container {
   width: 100%;
-  background: linear-gradient(180deg,
-      var(--white) 30%,
-      var(--primary-color) 80%);
+  background: linear-gradient(
+    180deg,
+    var(--white) 30%,
+    var(--primary-color) 80%
+  );
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -14,7 +16,6 @@
 .home-container::after {
   display: none;
 }
-
 
 /* Hero Section */
 .hero-container {
