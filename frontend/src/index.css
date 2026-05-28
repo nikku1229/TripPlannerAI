@@ -7,7 +7,6 @@
 @import "./styles/components/Navbar.css";
 @import "./styles/components/PrivateRoute.css";
 @import "./styles/components/SkeletonLoader.css";
-@import "./styles/components/TripCard.css";
 @import "./styles/pages/Home.css";
 @import "./styles/pages/Dashboard.css";
 @import "./styles/pages/CreateTrip.css";
@@ -18,8 +17,10 @@
 @import "./styles/pages/Profile.css";
 @import "./styles/pages/TripDetails.css";
 
-/* No dark mode styles - keeping only light mode */
 body {
-  background-color: var(--white);
-  color: var(--black);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

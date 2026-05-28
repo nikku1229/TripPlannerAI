@@ -2,8 +2,11 @@ import { chartItems } from "../utils/usage";
 import { COLORS } from "../utils/usage";
 import { formatINR } from "../hooks/currency";
 import labels from "../labels/common";
+import { useTheme } from "../context/ThemeContext";
 
 function ChartInsights({ trips }) {
+  const { isDarkMode } = useTheme();
+
   const budgetData = trips.slice(0, 8).map((trip, index) => ({
     name:
       trip.destination?.length > 12
@@ -21,6 +24,13 @@ function ChartInsights({ trips }) {
     days: trip.days,
     fullName: trip.destination,
   }));
+
+  const tooltipStyle = {
+    backgroundColor: isDarkMode ? "#0c0c0c" : "white",
+    border: `1px solid ${isDarkMode ? "#6ab04c" : "#43a047"}`,
+    borderRadius: "8px",
+    color: isDarkMode ? "#eee" : "#111111",
+  };
 
   return (
     <div className="charts-row">
@@ -48,11 +58,7 @@ function ChartInsights({ trips }) {
                   const trip = budgetData.find((t) => t.name === label);
                   return trip?.fullName || label;
                 }}
-                contentStyle={{
-                  backgroundColor: "white",
-                  border: "1px solid #43a047",
-                  borderRadius: "8px",
-                }}
+                contentStyle={tooltipStyle}
               />
               <chartItems.Legend />
               <chartItems.Bar

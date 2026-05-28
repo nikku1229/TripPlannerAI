@@ -3,11 +3,13 @@ import { NavLink, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Icons from "../utils/icons/index";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import labels from "../labels/common";
 import Logo from "../assets/Logo/Logo.png";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
+  const { isDarkMode, toggleDarkMode } = useTheme();
   const [isDark, setIsDark] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -23,10 +25,6 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const toggleDarkMode = () => {
-    console.log("Dark mode will be implemented later");
-  };
 
   const toggleSidebar = () => {
     if (isMobile) {
@@ -100,8 +98,19 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 </nav>
                 <div className="mobile-sidebar-footer">
                   <button onClick={toggleDarkMode} className="theme-toggle">
-                    <Icons.FiMoon size={20} />
-                    <span>{labels.darkModeBtnText}</span>
+                    {isDarkMode ? (
+                      <Icons.FiSun size={20} />
+                    ) : (
+                      <Icons.FiMoon size={20} />
+                    )}
+                    <motion.span
+                      animate={{
+                        opacity: isOpen ? 1 : 0,
+                        display: isOpen ? "inline" : "none",
+                      }}
+                    >
+                      {isDarkMode ? "Light Mode" : "Dark Mode"}
+                    </motion.span>
                   </button>
                 </div>
               </motion.aside>
@@ -185,14 +194,18 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
         <div className="sidebar-footer">
           <button onClick={toggleDarkMode} className="theme-toggle">
-            <Icons.FiMoon size={20} />
+            {isDarkMode ? (
+              <Icons.FiSun size={20} />
+            ) : (
+              <Icons.FiMoon size={20} />
+            )}
             <motion.span
               animate={{
                 opacity: isOpen ? 1 : 0,
                 display: isOpen ? "inline" : "none",
               }}
             >
-              {labels.darkModeBtnText}
+              {isDarkMode ? labels.lightModeBtnText : labels.darkModeBtnText}
             </motion.span>
           </button>
         </div>

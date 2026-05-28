@@ -4,9 +4,15 @@
   --white: #ecf4e8;
   --black: #111111;
   --gray: #444444;
-
-  --primary-color-variant: #052106;
-  --secondary-color-variant: #95d66b;
+  --bg-primary: #ecf4e8;
+  --bg-secondary: #ffffff;
+  --text-primary: #111111;
+  --text-secondary: #444444;
+  --border-color: rgba(13, 83, 14, 0.2);
+  --card-bg: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  --hover-bg: rgba(13, 83, 14, 0.1);
 
   /* Primary color shades */
   --primary-color-10: rgba(13, 83, 14, 0.1);
@@ -62,6 +68,84 @@
   --gray-70: rgba(68, 68, 68, 0.7);
   --gray-80: rgba(68, 68, 68, 0.8);
   --gray-90: rgba(68, 68, 68, 0.9);
+
+  /* Gradient Shade */
+  --primary-gradient: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+}
+
+/* Dark mode */
+html.dark {
+  --primary-color: #6ab04c;
+  --secondary-color: #9ad872;
+  --white: #0c0c0c;
+  --black: #eeeeee;
+  --gray: #a0a0a0;
+  --bg-primary: #0c0c0c;
+  --bg-secondary: #070707;
+  --text-primary: #eeeeee;
+  --text-secondary: #a0a0a0;
+  --border-color: rgba(106, 176, 76, 0.2);
+  --card-bg: #070707;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --input-bg: #0f0f1a;
+  --hover-bg: rgba(106, 176, 76, 0.1);
+
+  --primary-color-10: rgba(106, 176, 76, 0.1);
+  --primary-color-20: rgba(106, 176, 76, 0.2);
+  --primary-color-30: rgba(106, 176, 76, 0.3);
+  --primary-color-40: rgba(106, 176, 76, 0.4);
+  --primary-color-50: rgba(106, 176, 76, 0.5);
+  --primary-color-60: rgba(106, 176, 76, 0.6);
+  --primary-color-70: rgba(106, 176, 76, 0.7);
+  --primary-color-80: rgba(106, 176, 76, 0.8);
+  --primary-color-90: rgba(106, 176, 76, 0.9);
+
+  --secondary-color-10: rgba(154, 216, 114, 0.1);
+  --secondary-color-20: rgba(154, 216, 114, 0.2);
+  --secondary-color-30: rgba(154, 216, 114, 0.3);
+  --secondary-color-40: rgba(154, 216, 114, 0.4);
+  --secondary-color-50: rgba(154, 216, 114, 0.5);
+  --secondary-color-60: rgba(154, 216, 114, 0.6);
+  --secondary-color-70: rgba(154, 216, 114, 0.7);
+  --secondary-color-80: rgba(154, 216, 114, 0.8);
+  --secondary-color-90: rgba(154, 216, 114, 0.9);
+
+  --white-10: rgba(236, 244, 232, 0.05);
+  --white-20: rgba(236, 244, 232, 0.1);
+  --white-30: rgba(236, 244, 232, 0.15);
+  --white-40: rgba(236, 244, 232, 0.2);
+  --white-50: rgba(236, 244, 232, 0.25);
+  --white-60: rgba(236, 244, 232, 0.3);
+  --white-70: rgba(236, 244, 232, 0.35);
+  --white-80: rgba(236, 244, 232, 0.4);
+  --white-90: rgba(236, 244, 232, 0.45);
+
+  --black-10: rgba(238, 238, 238, 0.05);
+  --black-20: rgba(238, 238, 238, 0.1);
+  --black-30: rgba(238, 238, 238, 0.15);
+  --black-40: rgba(238, 238, 238, 0.2);
+  --black-50: rgba(238, 238, 238, 0.25);
+  --black-60: rgba(238, 238, 238, 0.3);
+  --black-70: rgba(238, 238, 238, 0.35);
+  --black-80: rgba(238, 238, 238, 0.4);
+  --black-90: rgba(238, 238, 238, 0.45);
+
+  --gray-10: rgba(160, 160, 160, 0.1);
+  --gray-20: rgba(160, 160, 160, 0.2);
+  --gray-30: rgba(160, 160, 160, 0.3);
+  --gray-40: rgba(160, 160, 160, 0.4);
+  --gray-50: rgba(160, 160, 160, 0.5);
+  --gray-60: rgba(160, 160, 160, 0.6);
+  --gray-70: rgba(160, 160, 160, 0.7);
+  --gray-80: rgba(160, 160, 160, 0.8);
+  --gray-90: rgba(160, 160, 160, 0.9);
+
+  /* Gradient Shade */
+  --primary-gradient: linear-gradient(135deg, #030303, #0c0c0c);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body,
@@ -105,4 +189,34 @@ button {
   background-color: transparent;
   border: 2px solid var(--primary-color);
   color: var(--primary-color);
+}
+
+html.dark .leaflet-container {
+  filter: brightness(0.8) contrast(1.2);
+}
+
+html.dark .leaflet-tile-pane {
+  filter: grayscale(0.3);
+}
+
+html.dark .goog-te-banner-frame,
+html.dark .goog-te-menu-frame {
+  display: none;
+}
+
+html.dark .go3958317564 {
+  color: #0c0c0c !important;
+}
+
+/* Chart colors for dark mode */
+html.dark .recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .recharts-text {
+  fill: #a0a0a0;
+}
+
+html.dark .recharts-default-legend .recharts-legend-item-text {
+  fill: #a0a0a0;
 }
