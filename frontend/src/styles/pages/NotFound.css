@@ -4,9 +4,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(180deg,
-      var(--white) 0%,
-      var(--primary-color) 100%);
+  background: linear-gradient(
+    180deg,
+    var(--white) 0%,
+    var(--primary-color) 100%
+  );
   padding: 20px;
   position: relative;
   overflow: hidden;
@@ -33,7 +35,6 @@
 }
 
 @keyframes floatNotFound {
-
   0%,
   100% {
     transform: translate(0, 0) rotate(0deg);
@@ -45,7 +46,7 @@
 }
 
 .notfound-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--white);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 32px;
@@ -79,7 +80,6 @@
 }
 
 @keyframes bounce {
-
   0%,
   100% {
     transform: translateY(0);

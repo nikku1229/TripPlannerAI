@@ -70,9 +70,11 @@
 .trip-title {
   font-size: 2rem;
   font-weight: 500;
-  background: linear-gradient(135deg,
-      var(--primary-color),
-      var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -118,7 +120,7 @@
   }
 
   .trip-export-btn {
-    background: #e3f2fd;
+    background: var(--white);
     color: var(--primary-color);
   }
 
@@ -128,7 +130,7 @@
   }
 
   .trip-actions .trip-delete-btn {
-    background: #ffebee;
+    background: var(--white);
     color: #c62828;
   }
 
@@ -182,14 +184,14 @@
 .weather-item {
   text-align: center;
   padding: 16px;
-  background: var(--primary-color-10);
+  background: var(--black-color-50);
   border-radius: 16px;
 }
 
 .weather-value {
   font-size: 1.2rem;
   font-weight: 400;
-  color: var(--primary-color);
+  color: var(--black);
   margin-bottom: 6px;
 }
 
@@ -229,9 +231,11 @@
 }
 
 .day-header {
-  background: linear-gradient(135deg,
-      var(--primary-color),
-      var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   color: var(--white);
   padding: 14px 20px;
 }

@@ -10,10 +10,12 @@ import {
 } from "../hooks/tripDetailsHook";
 import Icons from "../utils/icons/index";
 import { formatINR } from "../hooks/currency";
+import { useTheme } from "../context/ThemeContext";
 import labels from "../labels/common";
 
 const TripDetails = () => {
   const { id } = useParams();
+  const { isDarkMode } = useTheme();
   const navigate = useNavigate();
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -329,7 +331,11 @@ const TripDetails = () => {
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                url={
+                  isDarkMode
+                    ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                }
               />
               <Marker position={mapCoordinates}>
                 <Popup>

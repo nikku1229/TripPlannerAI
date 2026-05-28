@@ -6,5 +6,6 @@
   "headerLoginBtn": "Sign In",
   "headerRegisterBtn": "Sign Up",
   "logoutBtnText": "Logout",
+  "lightModeBtnText": "Light Mode",
   "darkModeBtnText": "Dark Mode"
 }
