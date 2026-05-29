@@ -1,0 +1,53 @@
+const nodemailer = require("nodemailer");
+const dotenv = require("dotenv");
+dotenv.config();
+
+// Configure email transporter
+const transporter = nodemailer.createTransport({
+  service: process.env.EMAIL_SERVICE || "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
+// Generate random OTP
+const generateOTP = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+};
+
+// Send OTP email
+const sendOTPEmail = async (email, otp) => {
+  const mailOptions = {
+    from: `"Trip Planner" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: "Password Reset OTP - TripAI",
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
+        <h2 style="color: #333; text-align: center;">Password Reset Request</h2>
+        <p style="color: #666; font-size: 16px;">Hello,</p>
+        <p style="color: #666; font-size: 16px;">You requested to reset your password. Please use the following OTP to verify your identity:</p>
+        <div style="text-align: center; margin: 30px 0;">
+          <div style="font-size: 32px; font-weight: bold; color: #0d530e; letter-spacing: 5px; padding: 15px; background-color: #f3f4f6; border-radius: 8px; display: inline-block;">
+            ${otp}
+          </div>
+        </div>
+        <p style="color: #666; font-size: 14px;">This OTP is valid for 10 minutes.</p>
+        <p style="color: #666; font-size: 14px;">If you didn't request this, please ignore this email.</p>
+        <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;" />
+        <p style="color: #999; font-size: 12px; text-align: center;">TripAI - Secure Password Reset</p>
+      </div>  
+    `,
+  };
+
+  try {
+    await transporter.verify();
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error("Email sending error:", error);
+    throw new Error("Failed to send OTP email");
+  }
+};
+
+module.exports = { generateOTP, sendOTPEmail };

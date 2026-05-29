@@ -6,6 +6,7 @@ import dashboard from "./pages/Dashboard.json";
 import loginRegister from "./pages/LoginRegister.json";
 import profile from "./pages/profile.json";
 import tripDetails from "./pages/tripDetails.json";
+import forgetPassword from "./pages/forgetPassword.json";
 
 const labels = {
   ...app,
@@ -16,6 +17,7 @@ const labels = {
   ...loginRegister,
   ...profile,
   ...tripDetails,
+  ...forgetPassword,
 };
 
 export default labels;

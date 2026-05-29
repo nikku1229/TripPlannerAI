@@ -17,9 +17,11 @@ import TripDetails from "./pages/TripDetails";
 import ChatAssistant from "./pages/ChatAssistant";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
+import ForgotPassword from "./pages/ForgotPassword";
+import VerifyOTP from "./pages/VerifyOTP";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
-
   return (
     <Router
       future={{
@@ -32,6 +34,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
 
         <Route element={<PrivateRoute />}>
           <Route element={<Layout />}>

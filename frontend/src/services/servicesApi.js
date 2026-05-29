@@ -1,5 +1,28 @@
 import api from "./api";
 
+export const authAPI = {
+  loginUser: (email, password) =>
+    api.post("/api/auth/login", { email, password }),
+  registerUser: (name, email, password) =>
+    api.post("/api/auth/register", {
+      name,
+      email,
+      password,
+    }),
+  forgetUserPassword: (email) =>
+    api.post("/api/auth/forgot-password", { email }),
+  verifyUserOtp: (email, otp) =>
+    api.post("/api/auth/verify-otp", {
+      email,
+      otp,
+    }),
+  resetUserPassword: (resetToken, newPassword) =>
+    api.post("/api/auth/reset-password", {
+      resetToken,
+      newPassword,
+    }),
+};
+
 export const tripAPI = {
   generate: (data) => api.post("/api/trips/generate", data),
   getAll: () => api.get("/api/trips"),
@@ -19,6 +42,7 @@ export const weatherAPI = {
 };
 
 export const profileAPI = {
+  getProfile: () => api.get("/api/auth/profile"),
   profileUpdate: (data) => api.put("/api/auth/profile", data),
   getPreferences: () => api.get("/api/auth/preferences"),
   updatePreferences: (preferences) =>
