@@ -39,7 +39,8 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
             <label>
-              <Icons.FiMail size={16} /> {labels.formFieldLoginRegister.emailLabel}
+              <Icons.FiMail size={16} />{" "}
+              {labels.formFieldLoginRegister.emailLabel}
             </label>
             <div className="input-wrapper">
               <input
@@ -54,7 +55,8 @@ const Login = () => {
 
           <div className="form-group">
             <label>
-              <Icons.FiLock size={16} /> {labels.formFieldLoginRegister.passwordLabel}
+              <Icons.FiLock size={16} />{" "}
+              {labels.formFieldLoginRegister.passwordLabel}
             </label>
             <div className="input-wrapper">
               <input

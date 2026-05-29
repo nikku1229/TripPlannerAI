@@ -59,3 +59,9 @@ export const COLORS = [
 export const navigateToTrip = (tripId) => {
   window.location.href = `/trip/${tripId}`;
 };
+
+export const formatTime = (seconds) => {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins}:${secs.toString().padStart(2, "0")}`;
+};
