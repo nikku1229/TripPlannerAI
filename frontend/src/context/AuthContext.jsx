@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import api from "../services/api";
+import { profileAPI, authAPI } from "../services/servicesApi";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext();
@@ -22,7 +23,7 @@ export const AuthProvider = ({ children }) => {
 
       if (token) {
         try {
-          const response = await api.get("/api/auth/profile");
+          const response = await profileAPI.getProfile();
           setUser(response.data);
         } catch (error) {
           console.error("Error fetching user:", error);
@@ -37,7 +38,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await api.post("/api/auth/login", { email, password });
+      const response = await authAPI.loginUser(email, password);
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);
@@ -52,11 +53,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await api.post("/api/auth/register", {
-        name,
-        email,
-        password,
-      });
+      const response = await authAPI.registerUser(name, email, password);
       const { token, user } = response.data;
 
       localStorage.setItem("token", token);
