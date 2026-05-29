@@ -32,7 +32,7 @@ const sendOTPEmail = async (email, otp) => {
             ${otp}
           </div>
         </div>
-        <p style="color: #666; font-size: 14px;">This OTP is valid for 10 minutes.</p>
+        <p style="color: #666; font-size: 14px;">This OTP is valid for 5 minutes.</p>
         <p style="color: #666; font-size: 14px;">If you didn't request this, please ignore this email.</p>
         <hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;" />
         <p style="color: #999; font-size: 12px; text-align: center;">TripAI - Secure Password Reset</p>

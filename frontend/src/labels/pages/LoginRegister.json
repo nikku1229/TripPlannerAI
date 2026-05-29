@@ -27,5 +27,6 @@
   "loginPageSignUpText": "Don't have an account? ",
   "registerPageSignInText": "Already have an account?",
   "passwordError": "Passwords do not match",
-  "termConditionText": "By signing up, you agree to our Terms of Service and Privacy Policy"
+  "termConditionText": "By signing up, you agree to our Terms of Service and Privacy Policy",
+  "backToHomeBtnText": "Back to Home"
 }

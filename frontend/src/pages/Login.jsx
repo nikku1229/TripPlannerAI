@@ -89,6 +89,14 @@ const Login = () => {
           <button type="submit" disabled={loading} className="login-btn">
             {loading ? labels.loadingLogin.loading : labels.loadingLogin.static}
           </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            className="secondary-btn"
+          >
+            {labels.backToHomeBtnText}
+          </button>
         </form>
 
         <p className="signup-link">

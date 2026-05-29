@@ -11,7 +11,7 @@ const VerifyOTP = () => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
-  const [timer, setTimer] = useState(300);
+  const [timer, setTimer] = useState(100);
   const [canResend, setCanResend] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -132,7 +132,7 @@ const VerifyOTP = () => {
                 type="button"
                 onClick={handleResendOTP}
                 disabled={resendLoading}
-                className="resend-btn"
+                className="secondary-btn"
               >
                 {resendLoading
                   ? labels.forgetPasswordBtnText.loading
