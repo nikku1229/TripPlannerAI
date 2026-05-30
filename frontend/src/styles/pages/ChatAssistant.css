@@ -617,8 +617,8 @@
     }
   }
 
-  .message-content {
-    padding: 10px;
+  .message-content, .suggestions-card {
+    padding:  20px 15px;
   }
 
   .message-content p {

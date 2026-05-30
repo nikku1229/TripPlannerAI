@@ -70,11 +70,9 @@
 .trip-title {
   font-size: 2rem;
   font-weight: 500;
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(135deg,
+      var(--primary-color),
+      var(--secondary-color));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -219,11 +217,9 @@
 }
 
 .day-header {
-  background: linear-gradient(
-    135deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(135deg,
+      var(--primary-color),
+      var(--secondary-color));
   color: var(--white);
   padding: 14px 20px;
 }
@@ -452,11 +448,6 @@
     padding: 20px 0px 0px 0px;
   }
 
-  .trip-header {
-    padding: 20px;
-    margin: 0px;
-  }
-
   .trip-title {
     font-size: 1.5rem;
   }
@@ -520,6 +511,10 @@
     flex-direction: column !important;
   }
 
+  .section-title {
+    margin-bottom: 16px;
+  }
+
   .action-btn {
     font-size: 12px;
     padding: 8px 16px;
@@ -535,7 +530,7 @@
 
   .recommendation-card,
   .budget-card {
-    padding: 0px !important;
+    padding: 15px !important;
   }
 
   .tips-card {
@@ -543,7 +538,10 @@
   }
 
   .trip-header,
-  .weather-card,
+  .weather-card {
+    padding: 15px;
+  }
+
   .itinerary-card,
   .recommendations-grid,
   .tips-budget-grid,
