@@ -10,21 +10,38 @@ import Logo from "../assets/Logo/Logo.png";
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const { user, logout } = useAuth();
   const { isDarkMode, toggleDarkMode } = useTheme();
-  const [isDark, setIsDark] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth >= 768) {
-        setMobileMenuOpen(false);
-      }
+      setIsMobile(window.innerWidth <= 768);
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        closeMobileMenu();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [mobileMenuOpen]);
 
   const toggleSidebar = () => {
     if (isMobile) {
@@ -49,7 +66,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     return (
       <>
         <button onClick={toggleSidebar} className="mobile-menu-btn">
-          <Icons.FiMenu size={24} />
+          <Icons.FiMenu size={24} className="icon" />
         </button>
 
         <AnimatePresence>
@@ -106,7 +123,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                     <motion.span
                       animate={{
                         opacity: isOpen ? 1 : 0,
-                        display: isOpen ? "inline" : "none",
+                        visibility: isOpen ? "visible" : "hidden",
                       }}
                     >
                       {isDarkMode ? "Light Mode" : "Dark Mode"}

@@ -19,7 +19,7 @@ const Header = () => {
         <nav className="header-nav">
           {user ? (
             <>
-              <Link to="/dashboard" className="nav-link secondary-btn">
+              <Link to="/dashboard" className="nav-link secondary-btn hid-btn">
                 {labels.headerDashboardBtnText}
               </Link>
               <Link to="/profile" className="nav-link primary-btn">
@@ -31,7 +31,10 @@ const Header = () => {
               <Link to="/login" className="nav-link secondary-btn">
                 {labels.headerLoginBtn}
               </Link>
-              <Link to="/register" className="primary-btn small nav-link">
+              <Link
+                to="/register"
+                className="primary-btn small nav-link hid-btn"
+              >
                 {labels.headerRegisterBtn}
               </Link>
             </>

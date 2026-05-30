@@ -235,7 +235,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .login-card {
     padding: 24px 20px;
   }

@@ -303,7 +303,7 @@
 .suggestions-card h3,
 .tips-card h3 {
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--primary-color);
   margin-bottom: 16px;
   display: flex;
@@ -499,20 +499,6 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 768px) {
-  .message-actions {
-    opacity: 1;
-  }
-
-  .message-list li {
-    font-size: 13px;
-  }
-
-  .input-hint {
-    font-size: 10px;
-  }
-}
-
 .chat-messages::-webkit-scrollbar {
   width: 6px;
 }
@@ -548,7 +534,7 @@
 
   .chat-main {
     height: 60vh;
-    min-height: 400px;
+    min-height: 600px;
   }
 }
 
@@ -574,23 +560,65 @@
   }
 
   .chat-sidebar {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .suggestion-btn {
     padding: 8px 12px;
     font-size: 12px;
   }
+
+  .message-actions {
+    opacity: 1;
+  }
+
+  .message-list li {
+    font-size: 13px;
+  }
+
+  .input-hint {
+    font-size: 10px;
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  .chat-container {
+    margin-top: 50px;
+  }
+
   .chat-avatar {
     width: 40px;
     height: 40px;
   }
 
+  .chat-header,
+  .chat-input-area {
+    padding: 10px;
+  }
+
   .chat-header-info h2 {
     font-size: 16px;
+  }
+
+  .chat-sidebar {
+    flex-direction: column;
+  }
+
+  .chat-messages {
+    padding: 10px;
+
+    .message-bubble {
+      gap: 10px;
+    }
+
+    .message-avatar {
+      width: 20px !important;
+      height: 20px !important;
+    }
+  }
+
+  .message-content, .suggestions-card {
+    padding:  20px 15px;
   }
 
   .message-content p {
@@ -608,6 +636,11 @@
 
   .chat-main {
     height: 50vh;
-    min-height: 350px;
+    min-height: 550px;
+    min-width: 0;
+  }
+
+  .chat-sidebar {
+    min-width: 0;
   }
 }
