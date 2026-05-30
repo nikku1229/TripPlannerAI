@@ -7,12 +7,6 @@ const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
 
-  useEffect(() => {
-    if (window.innerWidth < 768) {
-      setSidebarOpen(false);
-    }
-  }, [location]);
-
   return (
     <div className="layout-container">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />

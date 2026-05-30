@@ -14,9 +14,11 @@
 .gradient-text {
   font-size: 2rem;
   margin-bottom: 12px;
-  background: linear-gradient(135deg,
-      var(--primary-color),
-      var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -113,9 +115,11 @@ form {
 
 .style-btn.active {
   border-color: var(--primary-color);
-  background: linear-gradient(135deg,
-      var(--primary-color-10),
-      var(--secondary-color-10));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color-10),
+    var(--secondary-color-10)
+  );
   box-shadow: 0 4px 12px var(--primary-color-20);
 }
 
@@ -162,9 +166,11 @@ form {
 }
 
 .interest-btn.active {
-  background: linear-gradient(135deg,
-      var(--primary-color),
-      var(--secondary-color));
+  background: linear-gradient(
+    135deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   border-color: var(--primary-color);
   color: var(--white);
   box-shadow: 0 2px 8px var(--primary-color-30);
@@ -237,9 +243,11 @@ form {
 
 .budget-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg,
-      var(--primary-color),
-      var(--secondary-color));
+  background: linear-gradient(
+    90deg,
+    var(--primary-color),
+    var(--secondary-color)
+  );
   border-radius: 10px;
   transition: width 0.3s ease;
 }
@@ -256,16 +264,6 @@ form {
 
   .gradient-text {
     font-size: 1.5rem;
-  }
-
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .styles-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
   }
 
   .style-btn {
@@ -287,7 +285,12 @@ form {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
+  .create-trip-container {
+    padding: 0px;
+    margin-top: 30px;
+  }
+
   .create-trip-card {
     padding: 20px;
   }
@@ -312,6 +315,14 @@ form {
   .interest-btn {
     padding: 6px 14px;
     font-size: 11px;
+  }
+
+  .styles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .style-icon {
+    font-size: 16px;
   }
 }
 

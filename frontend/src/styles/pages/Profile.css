@@ -238,16 +238,14 @@
 /* Stats Cards Section */
 .stats-cards-section,
 .achievements-section,
-.recent-trips-section,
-.preferences-section {
+.recent-trips-section {
   margin-bottom: 32px;
 }
 
-.section-title {
+.profile-container .section-title {
   font-size: 1.3rem;
   font-weight: 600;
   color: var(--primary-color);
-  margin-bottom: 20px;
   font-family: "Modern Antiqua", serif;
 }
 
@@ -408,15 +406,11 @@
 .preferences-section {
   background: var(--white);
   border-radius: 24px;
-  padding: 24px;
-  margin-top: 24px;
+  padding: 24px 0px;
   position: relative;
 }
 
 .edit-preferences-btn {
-  position: absolute;
-  top: 24px;
-  right: 24px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -550,22 +544,6 @@
   text-transform: capitalize;
 }
 
-@media (max-width: 768px) {
-  .preferences-grid,
-  .preferences-grid-display {
-    grid-template-columns: 1fr;
-  }
-
-  .edit-preferences-btn {
-    position: static;
-    margin-bottom: 16px;
-  }
-
-  .preferences-section {
-    padding: 20px;
-  }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .profile-container {
@@ -586,29 +564,44 @@
     font-size: 1.4rem;
   }
 
-  .edit-form-grid {
-    grid-template-columns: 1fr;
+  .edit-form-grid,
+  .stats-cards-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .stats-cards-grid,
-  .achievements-grid,
   .recent-trips-grid {
     grid-template-columns: 1fr;
-  }
 
-  .profile-info-grid {
-    flex-direction: column;
-    gap: 10px;
+    .trip-card-header {
+      justify-content: space-between;
+    }
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .profile-container {
-    padding: 12px;
+    padding: 0px;
+
+    .profile-avatar {
+      width: 80px !important;
+      height: 80px !important;
+    }
+  }
+
+  .profile-content {
+    padding: 10px;
   }
 
   .stat-card {
-    padding: 16px;
+    padding: 10px;
+  }
+
+  .preferences-header {
+    flex-wrap: nowrap !important;
+  }
+
+  .stats-cards-grid {
+    grid-template-columns: 1fr;
   }
 
   .edit-actions {
@@ -618,5 +611,20 @@
   .save-profile-btn,
   .cancel-profile-btn {
     justify-content: center;
+  }
+
+  .preferences-grid,
+  .edit-form-grid,
+  .preferences-grid-display {
+    grid-template-columns: 1fr;
+  }
+
+  .preferences-actions {
+    flex-direction: column;
+  }
+
+  .preferences-section {
+    margin-top: 0px;
+    padding: 0px;
   }
 }

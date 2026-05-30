@@ -259,7 +259,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .register-card {
     padding: 24px 20px;
   }
