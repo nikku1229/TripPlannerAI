@@ -148,7 +148,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.section-title {
+.trip-details-container .section-title {
   font-size: 1.25rem;
   font-weight: 500;
   color: var(--primary-color);
@@ -167,18 +167,6 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-}
-
-@media (max-width: 768px) {
-  .weather-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .weather-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .weather-item {
@@ -294,12 +282,6 @@
   margin-bottom: 24px;
 }
 
-@media (max-width: 768px) {
-  .recommendations-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .recommendation-card {
   background: var(--white);
   border-radius: 20px;
@@ -340,12 +322,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   margin-bottom: 24px;
-}
-
-@media (max-width: 768px) {
-  .tips-budget-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .tips-card,
@@ -468,11 +444,17 @@
 
 @media (max-width: 768px) {
   .trip-details-container {
-    padding: 16px;
+    margin-top: 30px;
+    padding: 0px;
+  }
+
+  .back-btn {
+    padding: 20px 0px 0px 0px;
   }
 
   .trip-header {
     padding: 20px;
+    margin: 0px;
   }
 
   .trip-title {
@@ -480,15 +462,10 @@
   }
 
   .trip-header-main {
-    flex-direction: column;
-  }
-
-  .trip-actions {
-    width: 100%;
+    flex-wrap: nowrap;
   }
 
   .action-btn {
-    flex: 1;
     justify-content: center;
   }
 
@@ -503,11 +480,34 @@
   .map-container {
     height: 300px;
   }
+
+  .tips-budget-grid {
+    padding: 0px 20px;
+    grid-template-columns: 1fr;
+
+    .budget-card {
+      padding: 24px 0px 0px 0px;
+    }
+  }
+
+  .recommendations-grid {
+    grid-template-columns: 1fr;
+    gap: 0px;
+  }
+
+  .weather-card,
+  .itinerary-card,
+  .recommendations-grid {
+    margin-bottom: 0px;
+  }
+
+  .weather-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .trip-meta {
-    flex-direction: column;
     gap: 8px;
   }
 
@@ -516,7 +516,8 @@
   }
 
   .trip-actions {
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column !important;
   }
 
   .action-btn {
@@ -526,5 +527,28 @@
 
   .day-content {
     padding: 16px;
+  }
+
+  .recommendations-grid {
+    gap: 20px;
+  }
+
+  .recommendation-card,
+  .budget-card {
+    padding: 0px !important;
+  }
+
+  .tips-card {
+    padding: 15px;
+  }
+
+  .trip-header,
+  .weather-card,
+  .itinerary-card,
+  .recommendations-grid,
+  .tips-budget-grid,
+  .map-card {
+    margin-top: 30px;
+    padding: 0px;
   }
 }
